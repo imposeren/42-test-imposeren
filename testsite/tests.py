@@ -26,4 +26,3 @@ class TestProfile(HttpTestCase):
         self.find("Contacts")
         self.find("mail")
         self.find("phone")
-

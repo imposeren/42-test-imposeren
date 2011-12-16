@@ -21,3 +21,4 @@ dist
 *.tmp*
 .ropeproject
 .spyderproject
+.env

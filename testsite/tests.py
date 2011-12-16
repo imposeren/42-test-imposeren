@@ -1,5 +1,4 @@
 from tddspry.django import HttpTestCase
-
 #from django.conf import settings
 
 
@@ -13,7 +12,8 @@ class TestProfile(HttpTestCase):
         self.find("phone")
 
 
-from profiles import Profile, Contact
+from tddspry.django import TestCase
+from testsite.profiles.models import Profile, Contact
 
 class TestUserModel(TestCase):
     def test_add(self):

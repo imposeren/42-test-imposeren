@@ -1,7 +1,7 @@
 MANAGE=django-admin.py
 TESTER=django-nosetests.py
 
-test:
+test : syncdb
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=testsite.settings ${TESTER} testsite
 #PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=testsite.settings $(MANAGE) test hello
 

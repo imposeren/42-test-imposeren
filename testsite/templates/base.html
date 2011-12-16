@@ -1,0 +1,20 @@
+<html lang="en">
+<head> <title>{% block title %}Test task by imposeren{% endblock %}</title> </head>
+
+<body>
+    <div id="container">
+        <div id="menu">
+                <!-- MENU -->
+                <h3>Profile Viewer</h3>
+                {% comment %} {% if user.is_staff %} {% endcomment %}
+                <a href="{% url admin:index %}">Admin</a>
+		{% comment %} {% endif %} {% endcomment %}
+        </div>
+
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+</body>
+</html>

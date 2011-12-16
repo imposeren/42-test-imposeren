@@ -43,6 +43,13 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+#SITE ROOT
+import os
+import django
+DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = ''
@@ -102,7 +109,12 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'testsite.urls'
 
+FIXTURE_DIRS = (
+    SITE_ROOT,
+)
+
 TEMPLATE_DIRS = (
+    os.path.join(SITE_ROOT, 'templates'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -116,7 +128,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
+    'testsite.profiles',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

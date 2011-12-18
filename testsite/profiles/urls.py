@@ -4,7 +4,6 @@ from testsite.profiles.models import Profile
 
 urlpatterns = patterns(
     '',
-#    url(r'^$', DetailView.as_view(queryset=User.objects.filter(id=1)), kwargs={'pk': 1}),
     url(r'^$', DetailView.as_view(model=Profile), kwargs={'pk': 1}),
     url(r'^list/$',
         ListView.as_view(queryset=Profile.objects.order_by('id')[:5])),

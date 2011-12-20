@@ -17,9 +17,7 @@
                     Not set
                 {% endif %}
             </div>
-            <div class="profile.item">Bio:
-                {{ profile.bio }}
-            </div>
+            <div class="profile.item">Bio: {{ profile.bio|linebreaks }} </div>
         </td>
         <td>
             {% for contact in profile.contact_set.all %}

@@ -10,8 +10,6 @@ class IndexView(DetailView):
 def index(request):
     """Show detail on me"""
     return IndexView.as_view()(request, pk=1)
-
-def edit(request):
-    """Edit main page data"""
-    return index(request)
     
+def edit(request, pk=1):
+    return IndexView.as_view()(request, pk=1)

@@ -61,7 +61,7 @@ class TestContext(TestCase):
         self.assertIn('settings', context)
         self.assertEqual(context['settings'], settings)
         
-class TestForms(TestCase):
+class TestForms(HttpTestCase):
     def test_index_links(self):
         login_url = self.build_url('django.contrib.auth.views.login')
         logout_url = self.build_url('django.contrib.auth.views.logout')
@@ -77,3 +77,23 @@ class TestForms(TestCase):
         self.find(logout_url)
         self.find(edit_url)
         self.notfind(login_url)
+        self.logout()
+        
+    def test_edit(self):
+        self.login('admin', 'admin')
+        edit_url = self.build_url('testsite.profiles.views.edit')
+        view_url = self.build_url('testsite.profiles.views.index')
+        self.go200(edit_url)
+        self.formvalue(1, "form-0-user", "admin")
+        self.formvalue(1, "form-0-name", "Value")
+        self.formvalue(1, "form-0-surname", "Value")
+        self.formvalue(1, "form-0-bio", "Value")
+        self.formvalue(1, "form-0-birth", "2010-12-12")
+        
+        #self.submit200(11, url=view_url)
+        self.submit200(url=view_url)
+        self.find("First name.*: Value")
+        self.find("Last name.*: Value")
+        self.find("Bio.*:.*Value")
+        self.find("Date of Birth.*:\s+Dec. 12, 2010")
+        

@@ -4,7 +4,7 @@ from tddspry.django import HttpTestCase
 #from tddspry.django import DatabaseTestCase
 from tddspry.django import TestCase
 from testsite.profiles.models import Profile#, Contact
-from testsite.logging.models import Request
+from testsite.mylogging.models import Request
 
 class TestProfileModel(TestCase):
     """Test if Profile can be created and contacts associated

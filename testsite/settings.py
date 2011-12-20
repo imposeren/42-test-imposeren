@@ -106,6 +106,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'testsite.mylogging.middleware.LogRequest'
 )
 
 ROOT_URLCONF = 'testsite.urls'
@@ -131,6 +132,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'testsite.profiles',
+    'testsite.mylogging',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

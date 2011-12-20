@@ -28,3 +28,4 @@ static/
 .spyderworkspace
 .*.swp
 .coverage
+.ign*py

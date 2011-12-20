@@ -165,3 +165,5 @@ LOGGING = {
         },
     }
 }
+
+AUTH_PROFILE_MODULE = 'profiles.models.Profile'

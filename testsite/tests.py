@@ -1,5 +1,5 @@
 #from django.conf import settings
-import settings
+from django.conf import settings
 from tddspry.django import HttpTestCase
 #from tddspry.django import DatabaseTestCase
 from tddspry.django import TestCase
@@ -50,17 +50,30 @@ class TestLogger(HttpTestCase):
         self.find(r"\bGET(\s)+/requests/ ")
         self.find(r"\bGET(\s)+/")
         
-
+from django.test.client import RequestFactory 
+from django.template import RequestContext
+from context_processors import add_settings
 class TestContext(TestCase):
     def test_it(self):
-        from django.test.client import RequestFactory 
-        from django.template import RequestContext
-        from testsite.profiles import views as profiles_views   
-        from context_processors import add_settings
-        from django.conf import settings as django_settings
         factory = RequestFactory()
         request = factory.get('/')
-        c = RequestContext(request, {'foo': 'bar'}, [add_settings])
-        self.assertIn('settings', c)
-        self.assertEqual(c['settings'], django_settings)
-    
+        context = RequestContext(request, {'foo': 'bar'}, [add_settings])
+        self.assertIn('settings', context)
+        self.assertEqual(context['settings'], settings)
+        
+class TestForms(TestCase):
+    def test_index_links(self):
+        login_url = self.build_url('django.contrib.auth.views.login')
+        logout_url = self.build_url('django.contrib.auth.views.logout')
+        edit_url = self.build_url('testsite.profiles.edit')
+        self.go200('/')
+        
+        
+        self.notfind(logout_url)
+        self.notfind(edit_url)
+        self.find(login_url)
+        
+        self.login('admin', 'admin')
+        self.find(logout_url)
+        self.find(edit_url)
+        self.notfind(login_url)

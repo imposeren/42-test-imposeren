@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""urls go here"""
 from django.conf.urls.defaults import *
 #from django.views.generic import DetailView, ListView
 from testsite.mylogging.views import IndexView

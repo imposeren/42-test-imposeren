@@ -3,12 +3,14 @@
 """
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
     """User profile"""
+    user = models.ForeignKey(User, unique=True, blank=True)
     name = models.CharField("First name", max_length=64)
-    surname = models.CharField("Last Name" ,max_length=64)
+    surname = models.CharField("Last Name", max_length=64)
     bio = models.TextField("Biogaphy")
     birth = models.DateField("Birth Date")
 

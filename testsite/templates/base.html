@@ -15,10 +15,11 @@
         <hr />
         <div id="menu">
                 <!-- MENU -->
-                {% comment %} {% if user.is_staff %} {% endcomment %}
-                <div class="menuitem"><a href="{% url admin:index %}">Admin</a></div>
-                {% comment %} <div class="menuitem"><a href="{% url logger.views.last 10 %}">requests</a></div> {% endcomment %}
-		{% comment %} {% endif %} {% endcomment %}
+            {% comment %} {% if user.is_staff %} {% endcomment %}
+            <span class="menuitem"><a href="{% url testsite.profiles.views.index%}">My Profile</a></span>
+            <span class="menuitem"><a href="{% url testsite.mylogging.views.index%}">Requests</a></span>
+            <span class="menuitem"><a href="{% url admin:index %}">Admin</a></span>
+            {% comment %} {% endif %} {% endcomment %}
         </div>
     </div>
 

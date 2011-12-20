@@ -12,6 +12,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', DetailView.as_view(model=Profile), kwargs={'pk': 1}),
     url(r'^profile/', include('testsite.profiles.urls')),
+    url(r'^requests/', include('testsite.mylogging.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 

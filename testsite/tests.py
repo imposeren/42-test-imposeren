@@ -5,6 +5,7 @@ from tddspry.django import HttpTestCase
 from tddspry.django import TestCase
 from testsite.profiles.models import Profile#, Contact
 from testsite.mylogging.models import Request
+import datetime
 
 class TestProfileModel(TestCase):
     """Test if Profile can be created and contacts associated
@@ -15,11 +16,14 @@ class TestProfileModel(TestCase):
         self.assert_create(Profile,
                            name="TestName",
                            surname="TestSur",
-                           bio='no bio')
+                           bio='no bio',
+                           birth=datetime.datetime(1987, 12, 11, 0,0)
+                           )
 
         user2 = Profile(name="TestName2",
-                            surname="TestSur2",
-                            bio='no bio2')
+                        surname="TestSur2",
+                        bio='no bio2',
+                        birth=datetime.datetime(1987, 12, 11, 0,0))
         user2.save()
         self.assert_true(user2.contact_set.create(mean='phone',
                                                   data='+38(044)999-99-99'))

@@ -7,7 +7,15 @@
 {% block content %}
     {% if profile %}
     <table class="profile">
-        <tr><th></th><th>Contacts</th></tr>
+        <tr>
+        <th>
+            {% if user.is_staff %}
+            <a class="edit" href="{% url 'testsite.profiles.views.edit' %}">Edit</a>
+            {% endif %}
+        </th>
+        <th>Contacts</th>
+        </tr>
+
         <tr><td>
             <div class="profile.item">First name: {{ profile.name }}</div>
             <div class="profile.item">Last name: {{ profile.surname }}</div>
@@ -28,10 +36,7 @@
                 </div>
             {% endfor %}
         </td>
-    <tr></table>
-    {% if user.is_staff %}
-    <a href="{% url 'testsite.profiles.views.edit' %}">Edit</a>
-    {% endif %}
+    </tr></table>
     {% else %}
     All your base are belong to us (No profile info)
     {% endif %}

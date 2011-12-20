@@ -15,7 +15,8 @@ urlpatterns = patterns('',
     url(r'^requests/', include('testsite.mylogging.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
+        kwargs={'next_page': '/'}),
 )
 
 urlpatterns += staticfiles_urlpatterns()

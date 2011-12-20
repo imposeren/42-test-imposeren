@@ -50,4 +50,13 @@ class TestLogger(HttpTestCase):
         self.find(r"\bGET(\s)+/requests/ ")
         self.find(r"\bGET(\s)+/")
         
-        
+from django.test.client import RequestFactory 
+from testsite.profiles import views as profiles_views     
+class TestContext(TestCase):
+    def test_it(self):
+        factory = RequestFactory()
+        request = factory.get('/')
+        response = profiles_views.index(request)
+        c = response.context_data
+        self.assertIn('settings', c)
+    

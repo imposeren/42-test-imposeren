@@ -44,6 +44,7 @@ class TestLogger(HttpTestCase):
         self.go200('/')
         self.assert_count(Request, (count_cur + 1))
                 
+        self.login('admin', 'admin')
         count_cur = len(Request.objects.all())
         self.go200('/requests/')
         self.assert_count(Request, (count_cur + 1))

@@ -11,7 +11,7 @@ def index(request):
     """Show detail on me"""
     return IndexView.as_view()(request, pk=1)
 
-
 def edit(request):
     """Edit main page data"""
-    pass
+    return index(request)
+    

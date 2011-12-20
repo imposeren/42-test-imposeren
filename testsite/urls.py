@@ -14,10 +14,8 @@ urlpatterns = patterns('',
     url(r'^profile/', include('testsite.profiles.urls')),
     url(r'^requests/', include('testsite.mylogging.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^login/$', 'django.contrib.auth.views.login',
-        kwargs={'template': 'accounts/login.html'}),
-    url(r'^logout/$', 'django.contrib.auth.views.login',
-        kwargs={'template': 'accounts/logout.html'}),
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

@@ -65,7 +65,7 @@ class TestForms(TestCase):
     def test_index_links(self):
         login_url = self.build_url('django.contrib.auth.views.login')
         logout_url = self.build_url('django.contrib.auth.views.logout')
-        edit_url = self.build_url('testsite.profiles.edit')
+        edit_url = self.build_url('testsite.profiles.views.edit')
         self.go200('/')
         
         

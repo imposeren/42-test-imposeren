@@ -1,5 +1,6 @@
 <html lang="en">
 {% load static %}
+{% load url from future %}
 {% get_static_prefix as static_prefix %}
 <head>
     <title>{% block title %} 42 Coffee Cups Test Assignment {% endblock %}</title>
@@ -8,6 +9,13 @@
 </head>
 
 <body>
+    {% if user.is_authenticated %}
+        Logged in as {{ user }}.
+        <a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'django.contrib.auth.views.login' %}">Login</a>
+    {% endif %}
+
     <h1>42 Coffee Cups Test Assignment (Imposeren)</h1>
     <div id="container">
         <div id="content">
@@ -16,11 +24,11 @@
         <hr />
         <div id="menu">
                 <!-- MENU -->
-            {% comment %} {% if user.is_staff %} {% endcomment %}
-            <span class="menuitem"><a href="{% url testsite.profiles.views.index%}">My Profile</a></span>
-            <span class="menuitem"><a href="{% url testsite.mylogging.views.index%}">Requests</a></span>
-            <span class="menuitem"><a href="{% url admin:index %}">Admin</a></span>
-            {% comment %} {% endif %} {% endcomment %}
+            <span class="menuitem"><a href="{% url 'testsite.profiles.views.index' %}">My Profile</a></span>
+            <span class="menuitem"><a href="{% url 'testsite.mylogging.views.index' %}">Requests</a></span>
+            {% if user.is_staff %}
+            <span class="menuitem"><a href="{% url 'admin:index' %}">Admin</a></span>
+            {% endif %}
         </div>
     </div>
 

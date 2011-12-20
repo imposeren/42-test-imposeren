@@ -167,3 +167,4 @@ LOGGING = {
 }
 
 AUTH_PROFILE_MODULE = 'profiles.models.Profile'
+LOGIN_REDIRECT_URL = '/'

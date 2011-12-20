@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if request_list %}
+        <ul>
+        {% for item in request_list %}
+            <li>{{ item.date }},
+                {{ item.method }}
+                {{ item.path }} ,
+                GET: {{ item.get }},
+                POST: {{ item.post }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No profiles are available.</p>
+    {% endif %}
+{% endblock %}

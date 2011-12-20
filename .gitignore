@@ -27,3 +27,4 @@ django-nosetests.py
 static/
 .spyderworkspace
 .*.swp
+.coverage

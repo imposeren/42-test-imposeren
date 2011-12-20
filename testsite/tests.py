@@ -1,10 +1,15 @@
 #from django.conf import settings
 import settings
 from tddspry.django import HttpTestCase
+#from tddspry.django import DatabaseTestCase
 from tddspry.django import TestCase
-from testsite.profiles.models import Profile, Contact
+from testsite.profiles.models import Profile#, Contact
+from testsite.logging.models import Request
 
-class TestUserModel(TestCase):
+class TestProfileModel(TestCase):
+    """Test if Profile can be created and contacts associated
+    
+    """
     fixtures = ['testsite/initial_data.json']
     def test_add(self):
         self.assert_create(Profile,
@@ -26,3 +31,19 @@ class TestProfile(HttpTestCase):
         self.find("Contacts")
         self.find("mail")
         self.find("phone")
+
+
+class TestLogger(HttpTestCase):
+    def test_counts(self):
+        self.go200('/')
+        count_cur = len(Request.objects.all())
+        self.go200('/')
+        self.assert_count(Request, (count_cur + 1))
+        self.find("/")
+                
+        count_cur = len(Request.objects.all())
+        self.go200('/requests/')
+        self.assert_count(Request, (count_cur + 1))
+        self.find("/requests/")
+        
+        

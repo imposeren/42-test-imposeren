@@ -10,11 +10,12 @@ class IndexView(DetailView):
 def index(request):
     """Show detail on me"""
     return IndexView.as_view()(request, pk=1)
-    
+
 from django.forms.models import modelformset_factory, inlineformset_factory
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from testsite.decorators import superuser_only
+
 
 @superuser_only
 def edit(request, pk=1):
@@ -35,9 +36,9 @@ def edit(request, pk=1):
             return redirect(edit)
     else:
         formset = ProfileFormSet(queryset=Profile.objects.filter(pk=1))
+        print(dir(formset))
         c_formset = ContactsFormSet(instance=target.get())
 
-    return render_to_response('profiles/edit.html', {'formset':formset,
+    return render_to_response('profiles/edit.html', {'formset': formset,
                                                      'contacts': c_formset},
-                              context_instance = RequestContext(request))
- 
+                              context_instance=RequestContext(request))

@@ -86,7 +86,7 @@ class TestForms(HttpTestCase):
         self.find(edit_url)
         self.notfind(login_url)
         self.logout()
-        
+
     def test_edit(self):
         self.login('admin', 'admin')
         edit_url = self.build_url('testsite.profiles.views.edit')
@@ -97,10 +97,10 @@ class TestForms(HttpTestCase):
         self.formvalue(1, "form-0-surname", "Value")
         self.formvalue(1, "form-0-bio", "Value")
         self.formvalue(1, "form-0-birth", "2010-12-12")
-        self.formvalue(1, "contact_set-0-data", "m@m.com") #email
-        self.formvalue(1, "contact_set-1-data", "+800 555 55 55") #phone
+        self.formvalue(1, "contact_set-0-data", "m@m.com")  # email
+        self.formvalue(1, "contact_set-1-data", "+800 555 55 55")  # phone
         self.find("Photo")
-        
+
         #self.submit200(11, url=view_url)
         self.submit200(url=view_url)
         self.find(r"First name.*: Value")
@@ -109,14 +109,13 @@ class TestForms(HttpTestCase):
         self.find(r"Date of Birth.*:\s+Dec. 12, 2010")
         self.find(r"m@m.com")
         self.find(r"800 555 55 55")
-        
+
         #test wrong form
         self.go200(edit_url)
         self.formvalue(1, "form-0-birth", "ababab")
-        self.submit200() # back on edit page
-        
+        self.submit200()  # back on edit page
+
         #test unauthorized edit
         self.logout()
         self.go(edit_url)
         self.find("Permission")
-        

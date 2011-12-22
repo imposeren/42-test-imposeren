@@ -6,7 +6,7 @@
 
 {% block content %}
     {% if profile %}
-    <table class="profile">
+    <table>
         <tr>
         <th>
             {% if user.is_staff %}
@@ -16,7 +16,7 @@
         <th>Contacts</th>
         </tr>
 
-        <tr><td>
+        <tr><td class="profile">
             <div class="profile.item"><b>First name</b>: {{ profile.name }}</div>
             <div class="profile.item"><b>Last name</b>: {{ profile.surname }}</div>
             <div class="profile.item"><b>Date of Birth</b>:
@@ -28,7 +28,7 @@
             </div>
             <div class="profile.item"><b>Bio</b>: {{ profile.bio|linebreaks }} </div>
         </td>
-        <td>
+        <td class="profile">
             {% for contact in profile.contact_set.all %}
                 <div class="profile.item">
                 <em>{{ contact.mean }}</em>:

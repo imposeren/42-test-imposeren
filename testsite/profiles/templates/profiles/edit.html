@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 {% load url from future %}
-
+{% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{{ static_prefix }}/css/profile.css">
+{% endblock %}
 {% block content %}
 <form method="post" action="">
     {% csrf_token %}
     <table>
-    {{ formset }}
+    <tr><th></th><th>Contacts</th></tr>
+    <tr>
+        <td class="profile">
+            <table>{{ formset }}</table>
+        </td>
+        <td class="profile">
+            <table>{{ contacts }}</table>
+        </td>
+    </tr>
     </table>
     <p><input name="submit" type="submit" value="Submit"></p>
 </form>

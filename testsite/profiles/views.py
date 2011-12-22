@@ -21,7 +21,7 @@ from testsite.decorators import superuser_only
 def edit(request, pk=1):
     target = Profile.objects.filter(pk=1)
     ProfileFormSet = modelformset_factory(Profile, max_num=1)
-    ContactsFormSet = inlineformset_factory(Profile, Contact, max_num=3)
+    ContactsFormSet = inlineformset_factory(Profile, Contact, max_num=5)
 
     if request.method == 'POST':
         formset = ProfileFormSet(request.POST, request.FILES,
@@ -33,10 +33,11 @@ def edit(request, pk=1):
             formset.save()
             return redirect(index)
         else:
+            print(formset.errors)
+            print(c_formset.errors)
             return redirect(edit)
     else:
         formset = ProfileFormSet(queryset=Profile.objects.filter(pk=1))
-        print(dir(formset))
         c_formset = ContactsFormSet(instance=target.get())
 
     return render_to_response('profiles/edit.html', {'formset': formset,

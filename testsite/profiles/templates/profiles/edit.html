@@ -1,22 +1,47 @@
 {% extends "base.html" %}
 {% load url from future %}
 {% block extra_head %}
-    <link rel="stylesheet" type="text/css" href="/{{ STATIC_URL }}css/profile.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
 {% endblock %}
+
+{% block extra_header %}
+    <div style="float: right;">
+    {% if user.is_authenticated %}
+        Logged in as «{{ user }}»
+        (<a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>)
+    {% else %}
+        <a href="{% url 'django.contrib.auth.views.login' %}">Login</a>
+    {% endif %}
+    </div>
+{% endblock %}
+
 {% block content %}
 <form method="post" action="" enctype="multipart/form-data">
     {% csrf_token %}
-    <table>
+    <table class="profile">
     <tr><th></th><th>Contacts</th></tr>
     <tr>
-        <td class="profile">
-            <table>{{ formset }}</table>
+        <td>
+            <table class="profile">{{ formset }}</table>
         </td>
-        <td class="profile">
-            <table>{{ contacts }}</table>
+        <td>
+            {{ contacts.management_form }}
+            <table class="profile">
+                {% for form in contacts %}
+                    {{ form.id }}
+                    {% if form.mean.value %}
+                        {{ form.mean.as_hidden }} 
+                        {{ form.mean.value }}: {{ form.data }}
+                        . Delete {{ form.DELETE }}
+                    {% else %}
+                        {{ form.mean }}: {{ form.data }}
+                    {% endif %}
+                    <br />
+                {% endfor %}
+            </table>
         </td>
     </tr>
     </table>
-    <p><input name="submit" type="submit" value="Submit"></p>
+    <p><input name="submit" type="submit" value="Save"> <a href="/">Cancel</a></p>
 </form>
 {% endblock %}

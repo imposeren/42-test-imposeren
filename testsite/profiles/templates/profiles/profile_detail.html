@@ -6,35 +6,32 @@
 
 {% block content %}
     {% if profile %}
-    <table>
+    <table class="profile">
         <tr>
         <th>
-            {% if user.is_staff %}
-            <a class="edit" href="{% url 'testsite.profiles.views.edit' %}">Edit</a>
-            {% endif %}
         </th>
         <th>Contacts</th>
         </tr>
 
-        <tr><td class="profile">
-            <div class="profile.item"><b>First name</b>: {{ profile.name }}</div>
-            <div class="profile.item"><b>Last name</b>: {{ profile.surname }}</div>
-            <div class="profile.item"><b>Date of Birth</b>:
+        <tr><td>
+            <div class="profile.item">Name: {{ profile.name }}</div>
+            <div class="profile.item">Last name: {{ profile.surname }}</div>
+            <div class="profile.item">Date of Birth:
                 {% if profile.birth %}
                     {{ profile.birth }} 
                 {% else %}
                     Not set
                 {% endif %}
             </div>
-            <div class="profile.item"><b>Bio</b>: {{ profile.bio|linebreaks }} </div>
-            <div class="profile.item"><b>Photo</b>:<br />
+            <div class="profile.item">Bio: {{ profile.bio|linebreaks }} </div>
+            <div class="profile.item">Photo:<br />
                 {% if profile.photo %}
                 <img src="{{ profile.photo.url }}"</img></div>
                 {% else %}
                 NO PHOTO
                 {% endif %}
         </td>
-        <td class="profile">
+        <td>
             {% for contact in profile.contact_set.all %}
                 <div class="profile.item">
                 <em>{{ contact.mean }}</em>:

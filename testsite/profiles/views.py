@@ -28,7 +28,6 @@ def edit(request, pk=1):
         c_formset = ContactsFormSet(request.POST, request.FILES,
                                     instance=target.get())
         if formset.is_valid() and c_formset.is_valid():
-            print(request.FILES)
             c_formset.save()
             formset.save()
             return redirect(index)

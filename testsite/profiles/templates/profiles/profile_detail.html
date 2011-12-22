@@ -29,7 +29,7 @@
             <div class="profile.item"><b>Bio</b>: {{ profile.bio|linebreaks }} </div>
             <div class="profile.item"><b>Photo</b>:<br />
                 {% if profile.photo %}
-                <img src="{{ MEDIA_URL }}{{ profile.photo.url }}"</img></div>
+                <img src="{{ profile.photo.url }}"</img></div>
                 {% else %}
                 NO PHOTO
                 {% endif %}

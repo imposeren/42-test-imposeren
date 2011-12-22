@@ -13,6 +13,7 @@ class Profile(models.Model):
     surname = models.CharField("Last Name", max_length=64)
     bio = models.TextField("Biogaphy")
     birth = models.DateField("Birth Date")
+    photo = models.ImageField(upload_to='photos', blank=True)
 
 
 class Contact(models.Model):

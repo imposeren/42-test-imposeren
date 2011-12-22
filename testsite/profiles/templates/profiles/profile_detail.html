@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load url from future %}
 {% block extra_head %}
-    <link rel="stylesheet" type="text/css" href="{{ static_prefix }}/css/profile.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
 {% endblock %}
 
 {% block content %}
@@ -27,6 +27,12 @@
                 {% endif %}
             </div>
             <div class="profile.item"><b>Bio</b>: {{ profile.bio|linebreaks }} </div>
+            <div class="profile.item"><b>Photo</b>:<br />
+                {% if profile.photo %}
+                <img src="{{ MEDIA_URL }}{{ profile.photo.url }}"</img></div>
+                {% else %}
+                NO PHOTO
+                {% endif %}
         </td>
         <td class="profile">
             {% for contact in profile.contact_set.all %}

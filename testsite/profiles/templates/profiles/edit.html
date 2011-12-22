@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load url from future %}
 {% block extra_head %}
-    <link rel="stylesheet" type="text/css" href="{{ static_prefix }}/css/profile.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
 {% endblock %}
 {% block content %}
-<form method="post" action="">
+<form method="post" action="" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
     <tr><th></th><th>Contacts</th></tr>

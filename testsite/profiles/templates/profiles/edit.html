@@ -8,9 +8,9 @@
     <div style="float: right;">
     {% if user.is_authenticated %}
         Logged in as «{{ user }}»
-        (<a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>)
+        (<a href="{% url 'django.contrib.auth.views.logout' %}?next={% url 'profiles.views.edit' %}">Logout</a>)
     {% else %}
-        <a href="{% url 'django.contrib.auth.views.login' %}">Login</a>
+        <a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'profiles.views.edit' %}">Login</a>
     {% endif %}
     </div>
 {% endblock %}
@@ -22,7 +22,7 @@
     <tr><th></th><th>Contacts</th></tr>
     <tr>
         <td>
-            <table class="profile">{{ formset }}</table>
+            <table class="profile">{{ profile.as_table }}</table>
         </td>
         <td>
             {{ contacts.management_form }}
@@ -43,5 +43,11 @@
     </tr>
     </table>
     <p><input name="submit" type="submit" value="Save"> <a href="/">Cancel</a></p>
+{% if errors %}
+    Errors in form:
+    {% for error in errors %}
+        {{ error }}
+    {% endfor %}
+{% endif %}
 </form>
 {% endblock %}

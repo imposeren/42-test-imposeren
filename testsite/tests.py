@@ -71,19 +71,22 @@ class TestContext(TestCase):
 
 
 class TestForms(HttpTestCase):
-    def test_index_links(self):
+    def test_auth_links(self):
         login_url = self.build_url('django.contrib.auth.views.login')
         logout_url = self.build_url('django.contrib.auth.views.logout')
         edit_url = self.build_url('testsite.profiles.views.edit')
         self.go200('/')
 
         self.notfind(logout_url)
-        self.notfind(edit_url)
-        self.find(login_url)
-
-        self.login('admin', 'admin')
-        self.find(logout_url)
         self.find(edit_url)
+        self.notfind(login_url)
+
+        self.go200(edit_url)
+        self.find(login_url)
+        self.login('admin', 'admin')
+
+        self.go200(edit_url)
+        self.find(logout_url)
         self.notfind(login_url)
         self.logout()
 
@@ -92,18 +95,18 @@ class TestForms(HttpTestCase):
         edit_url = self.build_url('testsite.profiles.views.edit')
         view_url = self.build_url('testsite.profiles.views.index')
         self.go200(edit_url)
-        self.formvalue(1, "form-0-user", "admin")
-        self.formvalue(1, "form-0-name", "Value")
-        self.formvalue(1, "form-0-surname", "Value")
-        self.formvalue(1, "form-0-bio", "Value")
-        self.formvalue(1, "form-0-birth", "2010-12-12")
+        self.formvalue(1, "name", "Value")
+        self.formvalue(1, "surname", "Value")
+        self.formvalue(1, "bio", "Value")
+        self.formvalue(1, "birth", "2010-12-12")
         self.formvalue(1, "contact_set-0-data", "m@m.com")  # email
         self.formvalue(1, "contact_set-1-data", "+800 555 55 55")  # phone
         self.find("Photo")
 
         #self.submit200(11, url=view_url)
-        self.submit200(url=view_url)
-        self.find(r"First name.*: Value")
+        self.submit200()
+        self.go200(view_url)
+        self.find(r"Name.*: Value")
         self.find(r"Last name.*: Value")
         self.find(r"Bio.*:.*Value")
         self.find(r"Date of Birth.*:\s+Dec. 12, 2010")
@@ -112,10 +115,11 @@ class TestForms(HttpTestCase):
 
         #test wrong form
         self.go200(edit_url)
-        self.formvalue(1, "form-0-birth", "ababab")
+        self.formvalue(1, "birth", "ababab")
         self.submit200()  # back on edit page
 
-        #test unauthorized edit
-        self.logout()
-        self.go(edit_url)
-        self.find("Permission")
+#        #test unauthorized edit
+#        self.logout()
+#        self.go(edit_url)
+#        self.formvalue(1, "name", "Value2")
+#        self.submit200()

@@ -34,7 +34,7 @@
         <td>
             {% for contact in profile.contact_set.all %}
                 <div class="profile.item">
-                <em>{{ contact.mean }}</em>:
+                {{ contact.mean }}:
                 {{ contact.data }}
                 </div>
             {% endfor %}

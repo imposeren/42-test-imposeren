@@ -1,5 +1,8 @@
 from django.views.generic import DetailView
-from testsite.profiles.models import Profile, Contact
+from testsite.profiles.models import Profile
+from django.template import RequestContext
+from django.shortcuts import render_to_response, redirect
+from testsite.profiles.forms import ContactFormSet, ProfileForm, readonly
 
 
 class IndexView(DetailView):
@@ -11,35 +14,33 @@ def index(request):
     """Show detail on me"""
     return IndexView.as_view()(request, pk=1)
 
-from django.forms.models import modelformset_factory, inlineformset_factory
-from django.template import RequestContext
-from django.shortcuts import render_to_response, redirect
-from testsite.decorators import superuser_only
 
+def edit(request, pk=1, errors=None):
+    if errors is None:
+        errors = []
+    target = Profile.objects.get(pk=pk)
 
-@superuser_only
-def edit(request, pk=1):
-    target = Profile.objects.filter(pk=1)
-    ProfileFormSet = modelformset_factory(Profile, max_num=1)
-    ContactsFormSet = inlineformset_factory(Profile, Contact, max_num=5)
-
-    if request.method == 'POST':
-        formset = ProfileFormSet(request.POST, request.FILES,
-                                 queryset=Profile.objects.filter(pk=1))
-        c_formset = ContactsFormSet(request.POST, request.FILES,
-                                    instance=target.get())
-        if formset.is_valid() and c_formset.is_valid():
-            c_formset.save()
-            formset.save()
+    if request.method == 'POST' and request.user.is_authenticated():
+        profile = ProfileForm(request.POST, request.FILES, instance=target)
+        contacts = ContactFormSet(request.POST, request.FILES,
+                                   instance=target)
+        if profile.is_valid() and contacts.is_valid():
+            contacts.save()
+            profile.save()
             return redirect(index)
         else:
-            print(formset.errors)
-            print(c_formset.errors)
-            return redirect(edit)
-    else:
-        formset = ProfileFormSet(queryset=Profile.objects.filter(pk=1))
-        c_formset = ContactsFormSet(instance=target.get())
+            if not profile.is_valid():
+                errors.append(profile.errors)
+            if not contacts.is_valid():
+                errors.append(contacts.errors)
+    if request.method == 'GET' or len(errors):
+        profile = ProfileForm(instance=target)
+        contacts = ContactFormSet(instance=target)
+        if not request.user.is_authenticated():
+            readonly(profile)
+            readonly(contacts)
 
-    return render_to_response('profiles/edit.html', {'formset': formset,
-                                                     'contacts': c_formset},
+    return render_to_response('profiles/edit.html', {'profile': profile,
+                                                     'contacts': contacts,
+                                                     'errors': errors},
                               context_instance=RequestContext(request))

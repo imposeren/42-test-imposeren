@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="header">42 Coffee Cups Test Assignment
+    <div id="header"> <span style="font-size: 2em;">42 Coffee Cups Test Assignment</span>
     {% block extra_header %}{% endblock %}
     </div>
     <div id="container">
@@ -21,10 +21,8 @@
                 <!-- MENU -->
             <span class="menuitem"><a href="{% url 'testsite.profiles.views.index' %}">My Profile</a></span>
             <span class="menuitem"><a href="{% url 'testsite.mylogging.views.index' %}">Requests</a></span>
-            {% if user.is_staff %}
             <span class="menuitem"><a href="{% url 'admin:index' %}">Admin</a></span>
             <span class="menuitem"><a class="edit" href="{% url 'testsite.profiles.views.edit' %}">Edit</a></span>
-            {% endif %}
         </div>
     </div>
 

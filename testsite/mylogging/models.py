@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
 class Request(models.Model):
     """Request item"""
     method = models.CharField(max_length=3)

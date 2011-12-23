@@ -24,6 +24,9 @@ dist
 .env
 *.sqlite
 django-nosetests.py
-static/
+testsite/static/
 .spyderworkspace
 .*.swp
+.coverage
+.ign*py
+testsite/media

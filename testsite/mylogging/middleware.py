@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from testsite.mylogging.models import Request
 
 

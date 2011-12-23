@@ -33,7 +33,10 @@ def edit(request, pk=1, errors=None):
                 errors.append(profile.errors)
             if not contacts.is_valid():
                 errors.append(contacts.errors)
-    if request.method == 'GET' or len(errors):
+    if not request.user.is_authenticated():
+        errors.append('You are not authorized to edit this form')
+    if (request.method == 'GET' or len(errors) or
+    not request.user.is_authenticated()):
         profile = ProfileForm(instance=target)
         contacts = ContactFormSet(instance=target)
         if not request.user.is_authenticated():

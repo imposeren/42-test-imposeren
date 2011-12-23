@@ -1,7 +1,6 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.views.generic.simple import redirect_to
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView
 from profiles.models import Profile
 
 
@@ -17,4 +16,3 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += staticfiles_urlpatterns()
-

@@ -1,14 +1,20 @@
 {% extends "base.html" %}
+{% load url from future %}
 {% block extra_head %}
-    <link rel="stylesheet" type="text/css" href="{{ static_prefix }}/css/profile.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
 {% endblock %}
 
 {% block content %}
     {% if profile %}
     <table class="profile">
-        <tr><th></th><th>Contacts</th></tr>
+        <tr>
+        <th>
+        </th>
+        <th>Contacts</th>
+        </tr>
+
         <tr><td>
-            <div class="profile.item">First name: {{ profile.name }}</div>
+            <div class="profile.item">Name: {{ profile.name }}</div>
             <div class="profile.item">Last name: {{ profile.surname }}</div>
             <div class="profile.item">Date of Birth:
                 {% if profile.birth %}
@@ -18,6 +24,12 @@
                 {% endif %}
             </div>
             <div class="profile.item">Bio: {{ profile.bio|linebreaks }} </div>
+            <div class="profile.item">Photo:<br />
+                {% if profile.photo %}
+                <img src="{{ profile.photo.url }}"</img></div>
+                {% else %}
+                NO PHOTO
+                {% endif %}
         </td>
         <td>
             {% for contact in profile.contact_set.all %}
@@ -27,7 +39,7 @@
                 </div>
             {% endfor %}
         </td>
-    <tr></table>
+    </tr></table>
     {% else %}
     All your base are belong to us (No profile info)
     {% endif %}

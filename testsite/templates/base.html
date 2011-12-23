@@ -1,5 +1,6 @@
 <html lang="en">
 {% load static %}
+{% load url from future %}
 {% get_static_prefix as static_prefix %}
 <head>
     <title>{% block title %} 42 Coffee Cups Test Assignment {% endblock %}</title>
@@ -8,7 +9,9 @@
 </head>
 
 <body>
-    <h1>42 Coffee Cups Test Assignment (Imposeren)</h1>
+    <div id="header"> <span style="font-size: 2em;">42 Coffee Cups Test Assignment</span>
+    {% block extra_header %}{% endblock %}
+    </div>
     <div id="container">
         <div id="content">
             {% block content %}{% endblock %}
@@ -16,11 +19,9 @@
         <hr />
         <div id="menu">
                 <!-- MENU -->
-            {% comment %} {% if user.is_staff %} {% endcomment %}
-            <span class="menuitem"><a href="{% url testsite.profiles.views.index%}">My Profile</a></span>
-            <span class="menuitem"><a href="{% url testsite.mylogging.views.index%}">Requests</a></span>
-            <span class="menuitem"><a href="{% url admin:index %}">Admin</a></span>
-            {% comment %} {% endif %} {% endcomment %}
+            <span class="menuitem"><a href="{% url 'testsite.profiles.views.index' %}">My Profile</a></span>
+            <span class="menuitem"><a href="{% url 'testsite.mylogging.views.index' %}">Requests</a></span>
+            <span class="menuitem"><a href="{% url 'admin:index' %}">Admin</a></span>
         </div>
     </div>
 

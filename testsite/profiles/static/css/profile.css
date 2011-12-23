@@ -1,0 +1,9 @@
+.profile td, th{
+    padding:  0 3em 0 0;
+    line-height: 175%;
+    text-align: left;
+    vertical-align:text-top;
+}
+.profile p{
+    margin-top: 0;
+}

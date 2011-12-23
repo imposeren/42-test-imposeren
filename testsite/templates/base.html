@@ -1,18 +1,26 @@
 <html lang="en">
-<head> <title>{% block title %}Test task by imposeren{% endblock %}</title> </head>
+{% load static %}
+{% load url from future %}
+{% get_static_prefix as static_prefix %}
+<head>
+    <title>{% block title %} 42 Coffee Cups Test Assignment {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ static_prefix }}/css/base.css">
+    {% block extra_head %} {% endblock %}
+</head>
 
 <body>
+    <div id="header"> <span style="font-size: 2em;">42 Coffee Cups Test Assignment</span>
+    {% block extra_header %}{% endblock %}
+    </div>
     <div id="container">
-        <div id="menu">
-                <!-- MENU -->
-                <h3>Profile Viewer</h3>
-                {% comment %} {% if user.is_staff %} {% endcomment %}
-                <a href="{% url admin:index %}">Admin</a>
-		{% comment %} {% endif %} {% endcomment %}
-        </div>
-
         <div id="content">
             {% block content %}{% endblock %}
+        </div>
+        <hr />
+        <div id="menu">
+                <!-- MENU -->
+            <span class="menuitem"><a href="/">My Profile</a></span>
+            <span class="menuitem"><a href="{% url 'admin:index' %}">Admin</a></span>
         </div>
     </div>
 

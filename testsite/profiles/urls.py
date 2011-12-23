@@ -9,4 +9,3 @@ urlpatterns = patterns(
         ListView.as_view(queryset=Profile.objects.order_by('id')[:5])),
     url(r'^(?P<pk>\d+)/$', DetailView.as_view(model=Profile)),
 )
-

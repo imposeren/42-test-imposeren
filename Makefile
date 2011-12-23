@@ -1,17 +1,18 @@
 MANAGE=django-admin.py
 TESTER=django-nosetests.py
 PROJECT="testsite"
-PPATH="`pwd`:`pwd`:/${PROJECT}"
+PPATH=`pwd`
 #PYTHONPATH="${PYTHONPATH}:${PPATH}:${PPATH}/testsite"
 
-test : syncdb
-	PYTHONPATH="${PYTHONPATH}:${PPATH}" DJANGO_SETTINGS_MODULE=${PROJECT}.settings ${TESTER} ${PROJECT}
-#PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=testsite.settings $(MANAGE) test hello
+test: collectstatic syncdb
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings ${TESTER} --with-coverage --cover-package=${PROJECT} ${PROJECT}
 
-run:
-	PYTHONPATH="${PYTHONPATH}:${PPATH}" DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) runserver
+run: collectstatic
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) runserver
 
 syncdb:
-	PYTHONPATH="${PYTHONPATH}:${PPATH}" DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) syncdb --noinput
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) syncdb --noinput
 
+collectstatic:
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) collectstatic --noinput
 

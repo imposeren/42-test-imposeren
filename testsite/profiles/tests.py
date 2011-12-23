@@ -1,11 +1,11 @@
-#from django.conf import settings
-import settings
 from tddspry.django import HttpTestCase
 from tddspry.django import TestCase
-from testsite.profiles.models import Profile, Contact
+from testsite.profiles.models import Profile
+
 
 class TestUserModel(TestCase):
     fixtures = ['testsite/initial_data.json']
+
     def test_add(self):
         self.assert_create(Profile,
                            name="TestName",
@@ -18,6 +18,7 @@ class TestUserModel(TestCase):
         user2.save()
         self.assert_true(user2.contact_set.create(mean='phone',
                                                   data='+38(044)999-99-99'))
+
 
 class TestProfile(HttpTestCase):
     def test_content(self):

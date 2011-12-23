@@ -1,7 +1,6 @@
 """Just user profiles here
 
 """
-
 from django.db import models
 
 

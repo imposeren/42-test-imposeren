@@ -13,5 +13,6 @@ class TestLogger(HttpTestCase):
         count_cur = len(Request.objects.all())
         self.go200('/requests/')
         self.assert_count(Request, (count_cur + 1))
+        self.go200('/requests/')
         self.find(r"\bGET(\s)+/requests/ ")
         self.find(r"\bGET(\s)+/")

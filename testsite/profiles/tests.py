@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Tests go here"""
 from django.conf import settings
 from tddspry.django import HttpTestCase
 from tddspry.django import TestCase

@@ -18,26 +18,41 @@
 {% block content %}
 <form method="post" action="" enctype="multipart/form-data">
     {% csrf_token %}
-    <table class="profile">
+    <table>
     <tr><th></th><th>Contacts</th></tr>
     <tr>
-        <td>
-            <table class="profile">{{ profile.as_table }}</table>
+        <td class="profile">
+            <table>
+                {% comment %} {{ profile.as_table }} {% endcomment %}
+                {% for field in profile %}
+                    {% if field.label != "Bio" %}
+                    <tr>
+                    <td>{{ field.errors }}
+                    {{ field.label_tag }}:</td><td> {{ field }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
         </td>
         <td>
             {{ contacts.management_form }}
-            <table class="profile">
+            <table class="subtable">
                 {% for form in contacts %}
+                    <tr>
                     {{ form.id }}
                     {% if form.mean.value %}
-                        {{ form.mean.as_hidden }} 
-                        {{ form.mean.value }}: {{ form.data }}
-                        . Delete {{ form.DELETE }}
+                        {{ form.mean.as_hidden }}
+                        <td>{{ form.mean.value }}</td><td>{{ form.data }}</td>
+                        <td>Delete {{ form.DELETE }}</td>
                     {% else %}
-                        {{ form.mean }}: {{ form.data }}
+                        <td>{{ form.mean }}</td><td>{{ form.data }}</td><td></td>
                     {% endif %}
-                    <br />
+                    </tr>
                 {% endfor %}
+                <tr>
+                    <td>{{ field.errors }}
+                    {{ profile.bio.label_tag }}:</td><td> {{ profile.bio }}</td><td></td>
+                </tr>
             </table>
         </td>
     </tr>

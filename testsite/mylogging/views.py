@@ -4,7 +4,8 @@ from testsite.mylogging.models import Request
 
 
 class IndexView(ListView):
-    queryset = Request.objects.order_by('-date')[:10]
+    """Show first 10 http requests """
+    queryset = Request.objects.order_by('date')[:10]
 
 
 def index(request):

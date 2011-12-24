@@ -13,31 +13,31 @@
         <th>Contacts</th>
         </tr>
 
-        <tr><td>
-            <div class="profile.item">Name: {{ profile.name }}</div>
-            <div class="profile.item">Last name: {{ profile.surname }}</div>
-            <div class="profile.item">Date of Birth:
+        <tr><td class="profile">
+            <div>Name: {{ profile.name }}</div>
+            <div >Last name: {{ profile.surname }}</div>
+            <div>Date of Birth:
                 {% if profile.birth %}
-                    {{ profile.birth }} 
+                    {{ profile.birth }}
                 {% else %}
                     Not set
                 {% endif %}
             </div>
-            <div class="profile.item">Bio: {{ profile.bio|linebreaks }} </div>
-            <div class="profile.item">Photo:<br />
+            <div>Photo:<br />
                 {% if profile.photo %}
                 <img src="{{ profile.photo.url }}"</img></div>
                 {% else %}
                 NO PHOTO
                 {% endif %}
         </td>
-        <td>
+        <td  class="profile">
             {% for contact in profile.contact_set.all %}
-                <div class="profile.item">
+                <div>
                 {{ contact.mean }}:
                 {{ contact.data }}
                 </div>
             {% endfor %}
+            <div>Bio: {{ profile.bio|linebreaks }} </div>
         </td>
     </tr></table>
     {% else %}

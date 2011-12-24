@@ -23,9 +23,9 @@
                     Not set
                 {% endif %}
             </div>
-            <div>Photo:<br />
+            Photo:<br />
                 {% if profile.photo %}
-                <img src="{{ profile.photo.url }}"</img></div>
+                <img src="{{ profile.photo.url }}" width="400">
                 {% else %}
                 NO PHOTO
                 {% endif %}
@@ -37,7 +37,7 @@
                 {{ contact.data }}
                 </div>
             {% endfor %}
-            <div>Bio: {{ profile.bio|linebreaks }} </div>
+        <div>Bio: {{ profile.bio|linebreaks }}</div>
         </td>
     </tr></table>
     {% else %}

@@ -30,11 +30,14 @@
                     <td>{{ field.errors }}
                     {{ field.label_tag }}:</td><td> {{ field }}</td>
                     </tr>
+                    {% if field.label = "Photo" and field.value %}
+                    <tr><td></td><td><img src="{{ MEDIA_URL }}{{ field.value }}" width="250"></td></tr>
+                    {% endif %}
                     {% endif %}
                 {% endfor %}
             </table>
         </td>
-        <td>
+        <td class="profile">
             {{ contacts.management_form }}
             <table class="subtable">
                 {% for form in contacts %}
@@ -45,12 +48,12 @@
                         <td>{{ form.mean.value }}</td><td>{{ form.data }}</td>
                         <td>Delete {{ form.DELETE }}</td>
                     {% else %}
-                        <td>{{ form.mean }}</td><td>{{ form.data }}</td><td></td>
+                        <td >{{ form.mean }}</td><td>{{ form.data }}</td><td></td>
                     {% endif %}
                     </tr>
                 {% endfor %}
-                <tr>
-                    <td>{{ field.errors }}
+                <tr class="subtable">
+                    <td >{{ field.errors }}
                     {{ profile.bio.label_tag }}:</td><td> {{ profile.bio }}</td><td></td>
                 </tr>
             </table>

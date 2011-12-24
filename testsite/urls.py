@@ -2,10 +2,10 @@ from django.conf.urls.defaults import patterns, include, url
 from staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import DetailView
 from profiles.models import Profile
-from django.contrib.auth.views import login, logout
+from django.conf import settings
+from django.conf.urls.static import static
 
 
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
@@ -20,7 +20,4 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += staticfiles_urlpatterns()
-
-from django.conf import settings
-from django.conf.urls.static import static
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

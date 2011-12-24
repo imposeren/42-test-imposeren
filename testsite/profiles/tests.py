@@ -1,10 +1,12 @@
-#from django.conf import settings
+# -*- coding: utf-8 -*-
+"""Tests go here"""
 from django.conf import settings
 from tddspry.django import HttpTestCase
-#from tddspry.django import DatabaseTestCase
 from tddspry.django import TestCase
-from testsite.profiles.models import Profile  # , Contact
-from testsite.mylogging.models import Request
+from testsite.profiles.models import Profile
+from django.test.client import RequestFactory
+from django.template import RequestContext
+from testsite.context_processors import add_settings
 import datetime
 
 
@@ -42,26 +44,8 @@ class TestProfile(HttpTestCase):
         self.find("phone")
 
 
-class TestLogger(HttpTestCase):
-    def test_counts(self):
-        self.go200('/')
-        count_cur = len(Request.objects.all())
-        self.go200('/')
-        self.assert_count(Request, (count_cur + 1))
-
-        self.login('admin', 'admin')
-        count_cur = len(Request.objects.all())
-        self.go200('/requests/')
-        self.assert_count(Request, (count_cur + 1))
-        self.find(r"\bGET(\s)+/requests/ ")
-        self.find(r"\bGET(\s)+/")
-
-from django.test.client import RequestFactory
-from django.template import RequestContext
-from context_processors import add_settings
-
-
 class TestContext(TestCase):
+
     def test_it(self):
         factory = RequestFactory()
         request = factory.get('/')
@@ -117,10 +101,12 @@ class TestForms(HttpTestCase):
         self.go200(edit_url)
         self.formvalue(1, "birth", "ababab")
         self.submit200()  # back on edit page
+        self.find('Errors')
+        self.find('Enter a valid date')
 
 #        #test unauthorized edit
-#        self.logout()
-#        self.go(edit_url)
-#        self.formvalue(1, "name", "Value2")
-#        self.submit200()
-#
+        self.logout()
+        self.go(edit_url)
+        self.formvalue(1, "name", "Value2")
+        self.submit200()  # back on edit page
+        self.find('not authorized')

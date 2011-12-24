@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+"""Views go here"""
 from django.views.generic import DetailView
 from testsite.profiles.models import Profile
 from django.template import RequestContext
@@ -16,24 +18,28 @@ def index(request):
 
 
 def edit(request, pk=1, errors=None):
+    """Edit main profile data if user is authorized"""
     if errors is None:
         errors = []
     target = Profile.objects.get(pk=pk)
 
-    if request.method == 'POST' and request.user.is_authenticated():
-        profile = ProfileForm(request.POST, request.FILES, instance=target)
-        contacts = ContactFormSet(request.POST, request.FILES,
-                                   instance=target)
-        if profile.is_valid() and contacts.is_valid():
-            contacts.save()
-            profile.save()
-            return redirect(index)
-        else:
+    if request.method == 'POST':
+        if request.user.is_authenticated():
+            profile = ProfileForm(request.POST, request.FILES, instance=target)
+            contacts = ContactFormSet(request.POST, request.FILES,
+                                       instance=target)
+            if profile.is_valid() and contacts.is_valid():
+                contacts.save()
+                profile.save()
+                return redirect(index)
             if not profile.is_valid():
                 errors.append(profile.errors)
             if not contacts.is_valid():
                 errors.append(contacts.errors)
-    if request.method == 'GET' or len(errors):
+        else:
+            errors.append('You are not authorized to edit this form')
+    if (request.method == 'GET' or len(errors) or
+    not request.user.is_authenticated()):
         profile = ProfileForm(instance=target)
         contacts = ContactFormSet(instance=target)
         if not request.user.is_authenticated():

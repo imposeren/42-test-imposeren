@@ -60,7 +60,9 @@
         </td>
     </tr>
     </table>
+    {% if user.is_authenticated %}
     <p><input name="submit" type="submit" value="Save"> <a href="/">Cancel</a></p>
+    {% endif %}
 {% if errors %}
     Errors in form:
     {% for error in errors %}

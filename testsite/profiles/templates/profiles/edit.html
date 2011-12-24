@@ -27,7 +27,7 @@
                 {% for field in profile %}
                     {% if field.label != "Bio" %}
                     <tr>
-                    <td>{{ field.errors }}
+                    <td align="right">{{ field.errors }}
                     {{ field.label_tag }}:</td><td> {{ field }}</td>
                     </tr>
                     {% if field.label = "Photo" and field.value %}
@@ -45,15 +45,15 @@
                     {{ form.id }}
                     {% if form.mean.value %}
                         {{ form.mean.as_hidden }}
-                        <td>{{ form.mean.value }}</td><td>{{ form.data }}</td>
+                        <td align="right">{{ form.mean.value }}</td><td>{{ form.data }}</td>
                         <td>Delete {{ form.DELETE }}</td>
                     {% else %}
-                        <td >{{ form.mean }}</td><td>{{ form.data }}</td><td></td>
+                        <td align="right">{{ form.mean }}</td><td>{{ form.data }}</td><td></td>
                     {% endif %}
                     </tr>
                 {% endfor %}
                 <tr class="subtable">
-                    <td >{{ field.errors }}
+                    <td align="right">{{ field.errors }}
                     {{ profile.bio.label_tag }}:</td><td> {{ profile.bio }}</td><td></td>
                 </tr>
             </table>

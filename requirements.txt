@@ -4,3 +4,4 @@ tddspry==0.4-beta
 coverage==3.5.1
 PIL==1.1.7
 django-staticfiles==1.1.2
+django_evolution==0.6.5

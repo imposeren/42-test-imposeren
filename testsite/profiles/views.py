@@ -5,6 +5,8 @@ from testsite.profiles.models import Profile
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from testsite.profiles.forms import ContactFormSet, ProfileForm, readonly
+from django.http import HttpResponse
+import simplejson
 
 
 class IndexView(DetailView):
@@ -22,7 +24,6 @@ def edit(request, pk=1, errors=None):
     if errors is None:
         errors = []
     target = Profile.objects.get(pk=pk)
-
     if request.method == 'POST':
         if request.user.is_authenticated():
             profile = ProfileForm(request.POST, request.FILES, instance=target)
@@ -31,6 +32,10 @@ def edit(request, pk=1, errors=None):
             if profile.is_valid() and contacts.is_valid():
                 contacts.save()
                 profile.save()
+                if request.is_ajax():
+                    return HttpResponse(simplejson.dumps({'message': 'Done',
+                                                          'type': 'success'}),
+                                        mimetype='application/javascript')
                 return redirect(index)
             if not profile.is_valid():
                 errors.append(profile.errors)
@@ -46,7 +51,16 @@ def edit(request, pk=1, errors=None):
             readonly(profile)
             readonly(contacts)
 
-    return render_to_response('profiles/edit.html', {'profile': profile,
-                                                     'contacts': contacts,
-                                                     'errors': errors},
-                              context_instance=RequestContext(request))
+    if request.is_ajax():
+        htmled_errors = ""
+        for error in errors:
+            htmled_errors += error.as_ul()
+        return HttpResponse(simplejson.dumps({'message': 'Error',
+                                              'type': 'error',
+                                              'errors': htmled_errors}),
+                            mimetype='application/javascript')
+    else:
+        return render_to_response('profiles/edit.html', {'profile': profile,
+                                                         'contacts': contacts,
+                                                         'errors': errors},
+                                  context_instance=RequestContext(request))

@@ -18,4 +18,5 @@ syncdb:
 collectstatic:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) collectstatic --noinput
 
-
+evolve:
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) evolve --hint --execute

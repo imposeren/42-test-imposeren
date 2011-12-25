@@ -1,11 +1,11 @@
 {% extends "base_profile.html" %}
 {% load url from future %}
 {% block extra_extra_head %}
-    {{ profile.media }}
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.form.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.form.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/ajax_form.js"></script>
+    {{ profile.media }}
 {% endblock %}
 
 {% block extra_header %}

@@ -24,7 +24,15 @@ def test_recordingSuite0():
     client.select(classname=u'ui-datepicker-month', val=u'10')
     client.select(classname=u'ui-datepicker-year', val=u'1986')
     client.click(link=u'10')
+    client.click(name=u'save')
 
     #And this should work anyway:
-    client.waits.forElement(link=u'Uploading...', timeout=u'8000')
-    client.waits.forElement(link=u'Success!', timeout=u'8000')
+    #client.waits.forElement(name=u'Uploading...', timeout=u'8000')
+    #client.waits.forElement(name=u'Done', timeout=u'8000')
+    client.asserts.assertText(id="edit-profile-message", validator="Done")
+
+    client.click(id=u'id_birth')
+    client.type(text=u'1987-12-1122', id=u'id_birth')
+    client.click(name=u'save')
+    client.asserts.assertText(id="edit-profile-message",
+                              validator="birthEnter a valid date.")

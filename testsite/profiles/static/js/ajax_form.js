@@ -14,6 +14,18 @@ function setupAjaxForm(form_id){
 	};
     };
 
+    var enableAll = function(val){
+	var f = document.getElementById(form_id);
+	var inputs = f.getElementsByTagName("input");
+	for(var i = 0; i < inputs.length; i++){
+		inputs[i].removeAttribute("readonly",0);
+	};
+	var inputs = f.getElementsByTagName("textarea");
+	for(var i = 0; i < inputs.length; i++){
+		inputs[i].removeAttribute("readonly",0);
+	};
+    };
+
     $(form).ajaxSend(function(){
         $(form_message).removeClass().addClass('loading').html('Uploading...').fadeIn();
     });
@@ -24,9 +36,13 @@ function setupAjaxForm(form_id){
             disableAll(true);
         },
         success: function(json){
-            $(form_message).hide();
-            $(form_message).removeClass().addClass(json.type).html(json.message).fadeIn('slow');
-            disableAll(false);
+		$(form_message).hide();
+		$(form_message).removeClass().addClass(json.type).html(json.message).fadeIn('slow');
+		disableAll(false);
+		if(json.errors) {
+			$(form_message).removeClass().addClass('error').html(json.errors).fadeIn('slow')
+		}
+
         }
     };
     $(form).ajaxForm(options);

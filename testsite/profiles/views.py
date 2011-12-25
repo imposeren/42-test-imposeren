@@ -22,7 +22,9 @@ def edit(request, pk=1, errors=None):
     if errors is None:
         errors = []
     target = Profile.objects.get(pk=pk)
-
+    if request.is_ajax():
+        print("It's ajax")
+        print(request.POST)
     if request.method == 'POST':
         if request.user.is_authenticated():
             profile = ProfileForm(request.POST, request.FILES, instance=target)

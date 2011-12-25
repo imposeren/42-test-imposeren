@@ -1,8 +1,11 @@
-{% extends "base.html" %}
+{% extends "base_profile.html" %}
 {% load url from future %}
-{% block extra_head %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/profile.css">
+{% block extra_extra_head %}
     {{ profile.media }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.form.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/ajax_form.js"></script>
 {% endblock %}
 
 {% block extra_header %}
@@ -17,7 +20,7 @@
 {% endblock %}
 
 {% block content %}
-<form method="post" action="" enctype="multipart/form-data">
+<form method="post" action="{% url 'testsite.profiles.views.edit' %}" enctype="multipart/form-data" id="edit-profile">
     {% csrf_token %}
     <table>
     <tr><th></th><th>Contacts</th></tr>
@@ -62,13 +65,15 @@
     </tr>
     </table>
     {% if user.is_authenticated %}
-    <p><input name="submit" type="submit" value="Save"> <a href="/">Cancel</a></p>
+    <p><input name="save" type="submit" value="Save"> <a href="/">Cancel</a></p>
     {% endif %}
-{% if errors %}
-    Errors in form:
-    {% for error in errors %}
-        {{ error }}
-    {% endfor %}
-{% endif %}
+    <div id="edit-profile-message">
+    {% if errors %}
+        Errors in form:
+        {% for error in errors %}
+            {{ error }}
+        {% endfor %}
+    {% endif %}
+    </div>
 </form>
 {% endblock %}

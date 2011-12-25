@@ -20,7 +20,7 @@ class CalendarWidget(forms.TextInput):
         css = {
             'all': ('css/jquery-ui.css',)
         }
-        js = ('js/jquery.min.js', 'js/jquery-ui.min.js', 'js/select_birth.js')
+        js = ('js/select_birth.js',)
 
 
 class ProfileForm(forms.ModelForm):

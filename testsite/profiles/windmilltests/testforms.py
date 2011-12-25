@@ -26,5 +26,5 @@ def test_recordingSuite0():
     client.click(link=u'10')
 
     #And this should work anyway:
-    client.waits.forElement(link=u'Uploading', timeout=u'8000')
+    client.waits.forElement(link=u'Uploading...', timeout=u'8000')
     client.waits.forElement(link=u'Success!', timeout=u'8000')

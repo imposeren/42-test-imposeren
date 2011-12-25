@@ -15,12 +15,21 @@ def readonly(form_or_set):
             readonly(form)
 
 
+class CalendarWidget(forms.TextInput):
+    class Media:
+        css = {
+            'all': ('css/jquery-ui.css',)
+        }
+        js = ('js/jquery.min.js', 'js/jquery-ui.min.js', 'js/select_birth.js')
+
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user', )
         widgets = {
-            'bio': forms.Textarea(attrs={'cols': '20', 'rows': '10'})
+            'bio': forms.Textarea(attrs={'cols': '20', 'rows': '10'}),
+            'birth': CalendarWidget(),
         }
 
 

@@ -30,3 +30,4 @@ testsite/static/
 .coverage
 .ign*py
 testsite/media
+temp/

@@ -105,11 +105,11 @@ class TestForms(HttpTestCase):
         self.find('Enter a valid date')
 
 #        #test unauthorized edit
-        self.logout()
-        self.go(edit_url)
-        self.formvalue(1, "name", "Value2")
-        self.submit200()  # back on edit page
-        self.find('not authorized')
+#        self.logout()
+#        self.go(edit_url)
+#        self.formvalue(1, "name", "Value2")
+#        self.submit200()  # back on edit page
+#        self.find('not authorized')
 
 
 import os

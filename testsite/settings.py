@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'testsite.profiles',
     'testsite.mylogging',
+    'django_evolution',
 )
 
 # A sample logging configuration. The only tangible logging

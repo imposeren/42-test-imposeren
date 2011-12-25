@@ -17,11 +17,13 @@ def test_recordingSuite0():
 
     client.waits.forElement(timeout=u'8000', id=u'id_birth')
     client.click(id=u'id_birth')
-    client.click(xpath=u"//div[@id='ui-datepicker-div']/div/div/select[2]")
-    client.select(xpath=u'/div/div/select[2]', option=u'1987')
-    client.click(xpath=u"//div[@id='ui-datepicker-div']/div/div/select[1]")
-    client.select(xpath=u'/div/div/select[1]', option=u'Dec')
-    client.click(link=u'11')
+    client.waits.sleep(milliseconds=1000)
+    client.waits.forElement(
+        xpath=u"//div[@id='ui-datepicker-div']/div/div/select[2]",
+        id=u'id_birth')
+    client.select(classname=u'ui-datepicker-month', val=u'10')
+    client.select(classname=u'ui-datepicker-year', val=u'1986')
+    client.click(link=u'10')
 
     #And this should work anyway:
     client.waits.forElement(link=u'Uploading', timeout=u'8000')

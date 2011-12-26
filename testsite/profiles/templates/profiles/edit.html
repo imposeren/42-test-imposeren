@@ -12,15 +12,15 @@
     <div style="float: right;">
     {% if user.is_authenticated %}
         Logged in as «{{ user }}»
-        (<a href="{% url 'django.contrib.auth.views.logout' %}?next={% url 'profiles.views.edit' %}">Logout</a>)
+        (<a href="{% url 'django.contrib.auth.views.logout' %}?next={% url 'profiles:edit' %}">Logout</a>)
     {% else %}
-        <a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'profiles.views.edit' %}">Login</a>
+        <a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'profiles:edit' %}">Login</a>
     {% endif %}
     </div>
 {% endblock %}
 
 {% block content %}
-<form method="post" action="{% url 'testsite.profiles.views.edit' %}" enctype="multipart/form-data" id="edit-profile">
+<form method="post" action="{% url 'profiles:edit' %}" enctype="multipart/form-data" id="edit-profile">
     {% csrf_token %}
     <table>
     <tr><th></th><th>Contacts</th></tr>

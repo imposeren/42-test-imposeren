@@ -36,7 +36,7 @@ def edit(request, pk=1, errors=None):
                     return HttpResponse(simplejson.dumps({'message': 'Done',
                                                           'type': 'success'}),
                                         mimetype='application/javascript')
-                return redirect(index)
+                return redirect('profiles:index')
             if not profile.is_valid():
                 errors.append(profile.errors)
             if not contacts.is_valid():

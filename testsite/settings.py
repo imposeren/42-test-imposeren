@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'testsite.profiles',
     'testsite.mylogging',
     'django_evolution',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging

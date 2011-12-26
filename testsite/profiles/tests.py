@@ -120,3 +120,13 @@ class TestProjectWindmillTest(djangotest.WindmillDjangoUnitTest):
     test_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                             'windmilltests')
     browser = 'firefox'
+
+
+class TestReversedForm(HttpTestCase):
+    def test(self):
+        edit_url = self.build_url('profiles:edit')
+        self.go200(edit_url)
+        self.login('admin', 'admin')
+        self.find('Reverse')
+        self.go200(self.build_url('profiles:edit-reversed'))
+        self.find('Photo.*Date of Birth.*Last Name.*Name.*')

@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from testsite.profiles.forms import ContactFormSet, ProfileForm, readonly
 from django.http import HttpResponse
-import simplejson
+from django.utils import simplejson
 
 
 class IndexView(DetailView):
@@ -19,8 +19,9 @@ def index(request):
     return IndexView.as_view()(request, pk=1)
 
 
-def edit(request, pk=1, errors=None):
+def edit(request, pk=1, errors=None, reverse=False):
     """Edit main profile data if user is authorized"""
+    template = 'profiles/edit.html'
     if errors is None:
         errors = []
     target = Profile.objects.get(pk=pk)
@@ -36,7 +37,7 @@ def edit(request, pk=1, errors=None):
                     return HttpResponse(simplejson.dumps({'message': 'Done',
                                                           'type': 'success'}),
                                         mimetype='application/javascript')
-                return redirect(index)
+                return redirect('profiles:index')
             if not profile.is_valid():
                 errors.append(profile.errors)
             if not contacts.is_valid():
@@ -47,6 +48,10 @@ def edit(request, pk=1, errors=None):
     not request.user.is_authenticated()):
         profile = ProfileForm(instance=target)
         contacts = ContactFormSet(instance=target)
+        if reverse:
+            profile.fields.keyOrder.reverse()
+            contacts.forms.reverse()
+            template = 'profiles/edit_reversed.html'
         if not request.user.is_authenticated():
             readonly(profile)
             readonly(contacts)
@@ -60,7 +65,7 @@ def edit(request, pk=1, errors=None):
                                               'errors': htmled_errors}),
                             mimetype='application/javascript')
     else:
-        return render_to_response('profiles/edit.html', {'profile': profile,
+        return render_to_response(template, {'profile': profile,
                                                          'contacts': contacts,
                                                          'errors': errors},
                                   context_instance=RequestContext(request))

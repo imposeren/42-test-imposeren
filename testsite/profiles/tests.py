@@ -58,7 +58,7 @@ class TestForms(HttpTestCase):
     def test_auth_links(self):
         login_url = self.build_url('django.contrib.auth.views.login')
         logout_url = self.build_url('django.contrib.auth.views.logout')
-        edit_url = self.build_url('testsite.profiles.views.edit')
+        edit_url = self.build_url('profiles:edit')
         self.go200('/')
 
         self.notfind(logout_url)
@@ -76,8 +76,8 @@ class TestForms(HttpTestCase):
 
     def test_edit(self):
         self.login('admin', 'admin')
-        edit_url = self.build_url('testsite.profiles.views.edit')
-        view_url = self.build_url('testsite.profiles.views.index')
+        edit_url = self.build_url('profiles:edit')
+        view_url = self.build_url('profiles:index')
         self.go200(edit_url)
         self.formvalue(1, "name", "Value")
         self.formvalue(1, "surname", "Value")
@@ -120,3 +120,15 @@ class TestProjectWindmillTest(djangotest.WindmillDjangoUnitTest):
     test_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                             'windmilltests')
     browser = 'firefox'
+
+
+class TestReversedForm(HttpTestCase):
+    def test(self):
+        edit_url = self.build_url('profiles:edit')
+        self.login('admin', 'admin')
+        self.go200(edit_url)
+        self.find('Reverse')
+        self.go200(self.build_url('profiles:edit-reversed'))
+        self.find('Photo(\n|.)*Date of Birth(\n|.)*Last Name(\n|.)*Name')
+        self.find('Bio(\n|.)*Contacts(\n|.)*phone(\n|.)*email')
+        self.find('Bio(\n|.)*Photo(\n|.)*Name')

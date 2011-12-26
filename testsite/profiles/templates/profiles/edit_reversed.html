@@ -12,19 +12,40 @@
     <div style="float: right;">
     {% if user.is_authenticated %}
         Logged in as «{{ user }}»
-        (<a href="{% url 'django.contrib.auth.views.logout' %}?next={% url 'profiles:edit' %}">Logout</a>)
+        (<a href="{% url 'django.contrib.auth.views.logout' %}?next={% url 'profiles:edit-reversed' %}">Logout</a>)
     {% else %}
-        <a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'profiles:edit' %}">Login</a>
+        <a href="{% url 'django.contrib.auth.views.login' %}?next={% url 'profiles:edit-reversed' %}">Login</a>
     {% endif %}
     </div>
 {% endblock %}
 
 {% block content %}
-<form method="post" action="{% url 'profiles:edit' %}" enctype="multipart/form-data" id="edit-profile">
+<form method="post" action="{% url 'profiles:edit-reversed' %}" enctype="multipart/form-data" id="edit-profile">
     {% csrf_token %}
     <table>
-    <tr><th></th><th>Contacts</th></tr>
     <tr>
+        <td class="profile">
+            {{ contacts.management_form }}
+            <table class="subtable">
+                <tr class="subtable">
+                    <td align="right">
+                    {{ profile.bio.label_tag }}:</td><td colspan="2"> {{ profile.bio }}</td>
+                </tr>
+                <tr><th colspan="3">Contacts</th></tr>
+                {% for form in contacts %}
+                    <tr>
+                    {{ form.id }}
+                    {% if form.mean.value %}
+                        {{ form.mean.as_hidden }}
+                        <td align="right">{{ form.mean.value }}</td><td>{{ form.data }}</td>
+                        <td>Delete {{ form.DELETE }}</td>
+                    {% else %}
+                        <td align="right">{{ form.mean }}</td><td>{{ form.data }}</td><td></td>
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </td>
         <td class="profile">
             <table>
                 {% comment %} {{ profile.as_table }} {% endcomment %}
@@ -41,32 +62,11 @@
                 {% endfor %}
             </table>
         </td>
-        <td class="profile">
-            {{ contacts.management_form }}
-            <table class="subtable">
-                {% for form in contacts %}
-                    <tr>
-                    {{ form.id }}
-                    {% if form.mean.value %}
-                        {{ form.mean.as_hidden }}
-                        <td align="right">{{ form.mean.value }}</td><td>{{ form.data }}</td>
-                        <td>Delete {{ form.DELETE }}</td>
-                    {% else %}
-                        <td align="right">{{ form.mean }}</td><td>{{ form.data }}</td><td></td>
-                    {% endif %}
-                    </tr>
-                {% endfor %}
-                <tr class="subtable">
-                    <td align="right">{{ field.errors }}
-                    {{ profile.bio.label_tag }}:</td><td> {{ profile.bio }}</td><td></td>
-                </tr>
-            </table>
-        </td>
     </tr>
     </table>
     {% if user.is_authenticated %}
     <p><input name="save" type="submit" value="Save"> <a href="/">Cancel</a>
-        <a href="{% url 'profiles:edit-reversed' %}">Reverse</a>
+        <a href="{% url 'profiles:edit' %}">Reverse</a>
     </p>
     {% endif %}
     <div id="edit-profile-message">

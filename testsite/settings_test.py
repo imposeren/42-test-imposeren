@@ -137,7 +137,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'testsite.profiles',
     'testsite.mylogging',
-    'django_evolution',
     'south',
 )
 

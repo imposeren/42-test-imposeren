@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from testsite.profiles.forms import ContactFormSet, ProfileForm, readonly
 from django.http import HttpResponse
-import simplejson
+from django.utils import simplejson
 
 
 class IndexView(DetailView):

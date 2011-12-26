@@ -18,5 +18,6 @@ syncdb:
 collectstatic:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) collectstatic --noinput
 
-evolve:
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) evolve --hint --execute
+migrate:
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) schemamigration profiles --auto
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) migrate profiles

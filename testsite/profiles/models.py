@@ -12,7 +12,7 @@ class Profile(models.Model):
     surname = models.CharField("Last Name", max_length=64)
     bio = models.TextField()
     birth = models.DateField("Date of Birth")
-    photo = models.ImageField(upload_to='photos', blank=True)
+    photo = models.ImageField(upload_to='photos', blank=True, default='')
 
     def __unicode__(self):
         return self.name

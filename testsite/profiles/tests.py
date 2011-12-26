@@ -125,8 +125,10 @@ class TestProjectWindmillTest(djangotest.WindmillDjangoUnitTest):
 class TestReversedForm(HttpTestCase):
     def test(self):
         edit_url = self.build_url('profiles:edit')
-        self.go200(edit_url)
         self.login('admin', 'admin')
+        self.go200(edit_url)
         self.find('Reverse')
         self.go200(self.build_url('profiles:edit-reversed'))
-        self.find('Photo.*Date of Birth.*Last Name.*Name.*')
+        self.find('Photo(\n|.)*Date of Birth(\n|.)*Last Name(\n|.)*Name')
+        self.find('Bio(\n|.)*Contacts(\n|.)*phone(\n|.)*email')
+        self.find('Bio(\n|.)*Photo(\n|.)*Name')

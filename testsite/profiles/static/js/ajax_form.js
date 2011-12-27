@@ -37,10 +37,10 @@ function setupAjaxForm(form_id){
         },
         success: function(json){
 		$(form_message).hide();
-		$(form_message).removeClass().addClass(json.type).html(json.message).fadeIn('slow');
+		$(form_message).removeClass().addClass(json.result).html(json.result).fadeIn('slow');
 		disableAll(false);
 		if(json.errors) {
-			$(form_message).removeClass().addClass('error').html(json.errors).fadeIn('slow')
+			$(form_message).removeClass().addClass(json.result).html(json.errors).fadeIn('slow')
 		}
 
         }

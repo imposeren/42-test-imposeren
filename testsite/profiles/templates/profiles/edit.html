@@ -71,10 +71,8 @@
     {% endif %}
     <div id="edit-profile-message">
     {% if errors %}
-        Errors in form:
-        {% for error in errors %}
-            {{ error }}
-        {% endfor %}
+        Errors:
+            {{ errors }}
     {% endif %}
     </div>
 </form>

@@ -21,3 +21,5 @@ collectstatic:
 migrate:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) schemamigration profiles --auto
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) migrate profiles
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) schemamigration mylogging --auto
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings $(MANAGE) migrate mylogging

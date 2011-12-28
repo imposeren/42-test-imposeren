@@ -27,8 +27,6 @@ def test_recordingSuite0():
     client.click(name=u'save')
 
     #And this should work anyway:
-    #client.waits.forElement(name=u'Uploading...', timeout=u'8000')
-    #client.waits.forElement(name=u'Done', timeout=u'8000')
     client.asserts.assertText(id="edit-profile-message", validator="Done")
 
     client.click(id=u'id_birth')

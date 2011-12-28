@@ -37,17 +37,19 @@ function setupAjaxForm(form_id){
         },
         success: function(json){
 		$(form_message).hide();
-		disableAll(false);
 		if(json.errors) {
+			disableAll(false);
 			$.each(json.errors,function(fieldname,errmsgs) {
 			    id = "#id_" + fieldname;
 			    for (var i=0; i<errmsgs.length; i++){
 			        $(id).after('<div class="error" id="' + fieldname + '_error">' + errmsgs[i] + '</div>');
 			    }
 			});
+		$(form_message).removeClass().addClass(json.type).html(json.message).fadeIn('slow');
+		} else {
+		    $(form_message).removeClass().addClass(json.type).html(json.message+". Reloading...").fadeIn('slow');
+                    setTimeout('window.location.href=window.location.href', 1000);
 		}
-		$(form_message).removeClass().addClass(json.type).html(json.message+". Redirecting in 2 seconds").fadeIn('slow');
-                setTimeout('window.location.href=window.location.href', 2000);
         }
     };
     $(form).ajaxForm(options);

@@ -22,7 +22,7 @@ def index(request):
 def edit(request, pk=1, errors=None):
     """Edit main profile data if user is authorized"""
     if errors is None:
-        errors = []
+        errors = {}
     target = Profile.objects.get(pk=pk)
     if request.method == 'POST':
         if request.user.is_authenticated():
@@ -38,11 +38,12 @@ def edit(request, pk=1, errors=None):
                                         mimetype='application/javascript')
                 return redirect(index)
             if not profile.is_valid():
-                errors.append(profile.errors)
+                errors.update(profile.errors)
             if not contacts.is_valid():
-                errors.append(contacts.errors)
+                errors.update(contacts.errors)
         else:
-            errors.append('You are not authorized to edit this form')
+            errors.update(
+                {'message': 'You are not authorized to edit this form'})
     if (request.method == 'GET' or len(errors) or
     not request.user.is_authenticated()):
         profile = ProfileForm(instance=target)
@@ -52,15 +53,12 @@ def edit(request, pk=1, errors=None):
             readonly(contacts)
 
     if request.is_ajax():
-        htmled_errors = ""
-        for error in errors:
-            htmled_errors += error.as_ul()
         return HttpResponse(simplejson.dumps({'message': 'Error',
                                               'type': 'error',
-                                              'errors': htmled_errors}),
+                                              'errors': errors}),
                             mimetype='application/javascript')
     else:
         return render_to_response('profiles/edit.html', {'profile': profile,
                                                          'contacts': contacts,
-                                                         'errors': errors},
+                                                         'errors_html': errors},
                                   context_instance=RequestContext(request))

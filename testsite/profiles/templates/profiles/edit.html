@@ -45,17 +45,19 @@
             {{ contacts.management_form }}
             <table class="subtable">
                 {% for form in contacts %}
-                    <tr>
                     {{ form.id }}
                     {% if form.mean.value %}
-                        {{ form.mean.as_hidden }}
-                        <td align="right">{{ form.mean.value }}</td><td>{{ form.data }}</td>
-                        <td>Delete {{ form.DELETE }}</td>
+                        <tr class="clonable" id="{{ form.prefix }}"><td align="right">{{ form.mean }}</td><td>{{ form.data }}</td>
+                            <td>Delete {{ form.DELETE }}</td></tr>
                     {% else %}
-                        <td align="right">{{ form.mean }}</td><td>{{ form.data }}</td><td></td>
+                        <tr class="clonable" id="{{ form.prefix }}"><td align="right">{{ form.mean }}</td><td>{{ form.data }}</td>
+                            <td><a href="javascript:cloneLess('tr.clonable', 'contact_set', 'tr#{{ form.prefix }}');">Remove</a>
+                        </td></tr>
                     {% endif %}
-                    </tr>
                 {% endfor %}
+                <tr><td colspan="3" align="center">
+                    <a href="javascript:cloneMore('tr.clonable', 'contact_set');">Add contact</a>
+                </td></tr>
                 <tr class="subtable">
                     <td align="right">{{ field.errors }}
                     {{ profile.bio.label_tag }}:</td><td> {{ profile.bio }}</td><td></td>
@@ -64,16 +66,16 @@
         </td>
     </tr>
     </table>
-    {% if user.is_authenticated %}
-    <p><input name="save" type="submit" value="Save"> <a href="/">Cancel</a></p>
-    {% endif %}
-    <div id="edit-profile-message">
-    {% if errors %}
+    <div id="message">
+    {% if errors_html %}
         Errors in form:
-        {% for error in errors %}
+        {% for error in errors_html %}
             {{ error }}
         {% endfor %}
     {% endif %}
     </div>
+    {% if user.is_authenticated %}
+    <p><input name="save" type="submit" value="Save"> <a href="/">Cancel</a></p>
+    {% endif %}
 </form>
 {% endblock %}

@@ -29,10 +29,10 @@ def test_recordingSuite0():
     #And this should work anyway:
     #client.waits.forElement(name=u'Uploading...', timeout=u'8000')
     #client.waits.forElement(name=u'Done', timeout=u'8000')
-    client.asserts.assertText(id="edit-profile-message", validator="Done")
+    client.asserts.assertText(id="message", validator="Done")
 
     client.click(id=u'id_birth')
     client.type(text=u'1987-12-1122', id=u'id_birth')
     client.click(name=u'save')
-    client.asserts.assertText(id="edit-profile-message",
-                              validator="birthEnter a valid date.")
+    client.asserts.assertText(id="birth_error",
+                              validator="Enter a valid date.")

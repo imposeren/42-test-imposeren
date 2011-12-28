@@ -3,7 +3,7 @@
 from windmill.authoring import WindmillTestClient
 
 
-def test_recordingSuite0():
+def test_ajax_forms():
     client = WindmillTestClient(__name__)
     client.click(link=u'Edit')
     client.waits.forPageLoad(timeout=u'20000')
@@ -29,10 +29,12 @@ def test_recordingSuite0():
     #And this should work anyway:
     #client.waits.forElement(name=u'Uploading...', timeout=u'8000')
     #client.waits.forElement(name=u'Done', timeout=u'8000')
-    client.asserts.assertText(id="message", validator="Done")
+    client.asserts.assertText(id="message", validator="Done. Reloading...")
+    client.waits.forPageLoad(timeout=u'20000')
 
-    client.click(id=u'id_birth')
+    client.click(timeout=u'8000', id=u'id_birth')
     client.type(text=u'1987-12-1122', id=u'id_birth')
     client.click(name=u'save')
+    client.waits.forElement(id="birth_error")
     client.asserts.assertText(id="birth_error",
                               validator="Enter a valid date.")

@@ -111,13 +111,3 @@ class TestForms(HttpTestCase):
 #        self.formvalue(1, "name", "Value2")
 #        self.submit200()  # back on edit page
 #        self.find('not authorized')
-
-
-import os
-from windmill.authoring import djangotest
-
-
-class TestProjectWindmillTest(djangotest.WindmillDjangoUnitTest):
-    test_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            'windmilltests')
-    browser = 'firefox'

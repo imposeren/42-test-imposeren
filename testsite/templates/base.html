@@ -1,6 +1,7 @@
 <html lang="en">
 {% load static %}
 {% load url from future %}
+{% load mylogging_tags %}
 {% get_static_prefix as static_prefix %}
 <head>
     <title>{% block title %} 42 Coffee Cups Test Assignment {% endblock %}</title>
@@ -10,7 +11,14 @@
 
 <body>
     <div id="header"> <span style="font-size: 2em;">42 Coffee Cups Test Assignment</span>
-    {% block extra_header %}{% endblock %}
+    <span class="authed_as">
+    {% if user.is_authenticated %}
+        Logged in as «<a href="{% edit_link user %}">{{ user }}</a>»
+        (<a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>)
+    {% else %}
+        <a href="{% url 'django.contrib.auth.views.login' %}?">Login</a>
+    {% endif %}
+    </div>
     </div>
     <div id="container">
         <div id="content">

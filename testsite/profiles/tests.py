@@ -63,7 +63,6 @@ class TestForms(HttpTestCase):
 
         self.notfind(logout_url)
         self.find(edit_url)
-        self.notfind(login_url)
 
         self.go200(edit_url)
         self.find(login_url)

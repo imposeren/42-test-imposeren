@@ -1,6 +1,10 @@
 BODY {
 }
 
-.errorlist, .error{
+.errorlist, .error {
     color: red;
+}
+
+.authed_as {
+    padding:  0 0 0 1.5em;
 }

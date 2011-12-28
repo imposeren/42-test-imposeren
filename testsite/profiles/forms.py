@@ -42,5 +42,5 @@ class ContactForm(forms.ModelForm):
         }
 
 
-ContactFormSet = inlineformset_factory(Profile, Contact, max_num=4,
+ContactFormSet = inlineformset_factory(Profile, Contact,
                                        form=ContactForm)

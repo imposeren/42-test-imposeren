@@ -1,6 +1,6 @@
 BODY {
 }
 
-.errorlist li{
+.errorlist, .error{
     color: red;
 }

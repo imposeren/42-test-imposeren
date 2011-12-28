@@ -54,7 +54,7 @@ def edit(request, pk=1, errors=None, reverse=False):
 
     if request.is_ajax():
         return HttpResponse(simplejson.dumps({'result': result,
-                                              'errors': errors.as_ul()}),
+                                              'errors': errors}),
                             mimetype='application/javascript')
     else:
         return render_to_response(template, {'profile': profile,

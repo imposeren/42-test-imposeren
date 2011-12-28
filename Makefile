@@ -1,8 +1,6 @@
 MANAGE=django-admin.py
 TESTER=django-nosetests.py
 PROJECT=testsite
-PPATH=`pwd`
-#PYTHONPATH="${PYTHONPATH}:${PPATH}:${PPATH}/testsite"
 
 test: collectstatic
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings_test ${MANAGE} syncdb --noinput

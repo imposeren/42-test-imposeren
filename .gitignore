@@ -31,3 +31,4 @@ testsite/static/
 .ign*py
 testsite/media
 temp/
+*.dat

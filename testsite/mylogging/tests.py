@@ -25,10 +25,10 @@ class TestLogger(HttpTestCase):
 
 
 class testTag(TestCase):
-    def setUp(self):
-        register = template.Library()
-        template.libraries['django.templatetags.mylogging_tags'] = register
-        register.tag('edit_link ', edit_link)
+#    def setUp(self):
+#        register = template.Library()
+#        template.libraries['django.templatetags.mylogging_tags'] = register
+#        register.tag('edit_link ', edit_link)
 
     def test_tag(self):
         factory = RequestFactory()

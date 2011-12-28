@@ -32,6 +32,7 @@ class testTag(TestCase):
 
     def test_tag(self):
         factory = RequestFactory()
+        self.login('admin', 'admin')
         request = factory.get('/')
         context = RequestContext(request, {'foo': 'bar'})
         out = Template(

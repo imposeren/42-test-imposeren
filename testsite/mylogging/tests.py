@@ -7,6 +7,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.template import RequestContext
 from django.template import Template
 from django.contrib.auth.models import User
+from django.core import management
 
 
 class TestLogger(HttpTestCase):
@@ -81,3 +82,9 @@ class testTag(TestCase):
             "{% edit_link user %}"
         ).render(context)
         self.assertEquals(out, "/admin/auth/user/1/")
+
+
+class testManagement(TestCase):
+    def test_modelstats(self):
+        result = management.call_command('modelstats', verbosity=0,
+                                         interactive=False)

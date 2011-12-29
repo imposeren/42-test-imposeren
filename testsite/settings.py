@@ -105,7 +105,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     'django.core.context_processors.static',
     'django.contrib.auth.context_processors.auth',
-    'testsite.context_processors.add_settings',
+    'testsite.extra_common.context_processors.add_settings',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'testsite.profiles',
     'testsite.mylogging',
+    'testsite.extra_common',
     'south',
 )
 

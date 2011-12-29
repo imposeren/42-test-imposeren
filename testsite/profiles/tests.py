@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
 """Tests go here"""
-from django.conf import settings
-from tddspry.django import HttpTestCase
-from tddspry.django import TestCase
+from testsite.extra_common.testcases import MyHttpTestCase, MyTestCase
 from testsite.profiles.models import Profile
-from django.test.client import RequestFactory
-from django.template import RequestContext
-from testsite.context_processors import add_settings
 import datetime
 
 
-class TestProfileModel(TestCase):
+class TestProfileModel(MyTestCase):
     """Test if Profile can be created and contacts associated
 
     """
@@ -33,7 +28,7 @@ class TestProfileModel(TestCase):
                                                   data='+38(044)999-99-99'))
 
 
-class TestProfile(HttpTestCase):
+class TestProfile(MyHttpTestCase):
     def test_content(self):
         self.go200('/')
         self.find("Bio")
@@ -44,17 +39,7 @@ class TestProfile(HttpTestCase):
         self.find("phone")
 
 
-class TestContext(TestCase):
-
-    def test_it(self):
-        factory = RequestFactory()
-        request = factory.get('/')
-        context = RequestContext(request, {'foo': 'bar'}, [add_settings])
-        self.assertIn('settings', context)
-        self.assertEqual(context['settings'], settings)
-
-
-class TestForms(HttpTestCase):
+class TestForms(MyHttpTestCase):
     def test_auth_links(self):
         login_url = self.build_url('django.contrib.auth.views.login')
         logout_url = self.build_url('django.contrib.auth.views.logout')

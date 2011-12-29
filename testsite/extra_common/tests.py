@@ -20,7 +20,9 @@ class testManagement(MyTestCase):
     def test_modelstats(self):
         management.call_command('modelstats', verbosity=0,
                                 interactive=False)
+        # just test if this does not raise anything
+
         result = modelstats()
         self.assertIn('testsite.profiles.models.Profile', result)
-        self.assertIn('testsite.profiles.models.Logging', result)
+        self.assertIn('testsite.mylogging.models.Request', result)
 

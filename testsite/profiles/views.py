@@ -38,7 +38,11 @@ def edit(request, pk=1, errors=None, reverse=False):
         if not profile.is_valid():
             errors.update(profile.errors)
         if not contacts.is_valid():
-            errors.update(contacts.errors)
+            for num, suberrors in enumerate(contacts.errors):
+                if suberrors:
+                    for field, error in suberrors.iteritems():
+                        field_id = "%s-%s-%s" % (contacts.prefix, num, field)
+                        errors.update({field_id: error})
     if (request.method == 'GET' or not request.user.is_authenticated()
       or errors):
         profile = ProfileForm(instance=target)

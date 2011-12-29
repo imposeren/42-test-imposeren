@@ -8,3 +8,12 @@ BODY {
 .authed_as {
     padding:  0 0 0 1.5em;
 }
+
+.hideit {
+    display: none;
+    visibility: hidden;
+}
+
+tr.hideit {
+    visibility: collapse;
+}

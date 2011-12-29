@@ -37,7 +37,10 @@
                     {{ form.id }}
                     {% if form.mean.value %}
                         <tr class="clonable" id="{{ form.prefix }}"><td align="right">{{ form.mean }}</td><td>{{ form.data }}</td>
-                            <td>Delete {{ form.DELETE }}</td></tr>
+                            <td>
+                                <span class="hideit">{{ form.DELETE }}</span>
+                                <a href="javascript:cloneLessExisting('tr#{{ form.prefix }}', '{{ form.prefix }}');">Remove</a>
+                            </td></tr>
                     {% else %}
                         <tr class="clonable" id="{{ form.prefix }}"><td align="right">{{ form.mean }}</td><td>{{ form.data }}</td>
                             <td><a href="javascript:cloneLess('tr.clonable', 'contact_set', 'tr#{{ form.prefix }}');">Remove</a>

@@ -27,7 +27,7 @@ function setupAjaxForm(form_id){
     };
 
     $(form).ajaxSend(function(){
-        $(form_message).removeClass().addClass('loading').html('Uploading...').fadeIn();
+        $(form_message).html('Uploading...').fadeIn();
     });
 
     var options = {
@@ -37,18 +37,19 @@ function setupAjaxForm(form_id){
         },
         success: function(json){
 		$(form_message).hide();
-		$(form_message).removeClass().addClass(json.result).html(json.result).fadeIn('slow');
+		$(form_message).html(json.result).fadeIn('slow');
+		$('.error').remove();
 		if(!jQuery.isEmptyObject(json.errors)) {
 			disableAll(false);
 			$.each(json.errors,function(fieldname,errmsgs) {
-			    id = "#id_" + fieldname;
+			    var id = "#id_" + fieldname;
 			    for (var i=0; i<errmsgs.length; i++){
 			        $(id).after('<div class="error" id="' + fieldname + '_error">' + errmsgs[i] + '</div>');
 			    }
 			});
-		$(form_message).removeClass().addClass(json.result).html(json.result).fadeIn('slow');
+		    $(form_message).html('<div class="error">' + json.result + "</div>").fadeIn('slow');
 		} else {
-		    $(form_message).removeClass().addClass(json.result).html(json.result+". Reloading...").fadeIn('slow');
+		    $(form_message).html(json.result+". Reloading...").fadeIn('slow');
                     setTimeout('window.location.href=window.location.href', 1000);
 		}
         }
@@ -90,6 +91,16 @@ function cloneLess(selector, type, subselector) {
     total--;
     $('#id_' + type + '-TOTAL_FORMS').val(total);
     $(subselector).remove();
+};
+
+
+function cloneLessExisting(selector, formselector) {
+    var Element = $(selector);
+    console.log(Element);
+    //var total = $(selector).length;
+    console.log(Element.find('#id_' + formselector + '-DELETE'));
+    Element.find('#id_' + formselector + '-DELETE').prop("checked", true);
+    Element.addClass('hideit');
 };
 
 

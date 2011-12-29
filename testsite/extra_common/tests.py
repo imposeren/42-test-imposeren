@@ -5,6 +5,9 @@ from django.template import RequestContext
 from testsite.extra_common.context_processors import add_settings
 from django.conf import settings
 from django.core import management
+from testsite.profiles.models import Profile
+from testsite.mylogging.models import Request
+import datetime
 
 
 class TestContext(MyTestCase):
@@ -18,11 +21,28 @@ class TestContext(MyTestCase):
 
 class testManagement(MyTestCase):
     def test_modelstats(self):
+        PROFILE = 'testsite.profiles.models.Profile'
+        REQUEST = 'testsite.mylogging.models.Request'
         management.call_command('modelstats', verbosity=0,
                                 interactive=False)
         # just test if this does not raise anything
 
         result = modelstats()
-        self.assertIn('testsite.profiles.models.Profile', result)
-        self.assertIn('testsite.mylogging.models.Request', result)
+        self.assertIn(PROFILE, result)
+        self.assertIn(REQUEST, result)
+        profiles_num_0 = int(result[result.find(PROFILE):].split()[1])
+        requests_num_0 = int(result[result.find(REQUEST):].split()[1])
+        new_profile = Profile(name="TestName",
+                              surname="TestSur",
+                              bio='no bio',
+                              birth=datetime.datetime(1987, 12, 11, 0, 0))
+        new_profile.save()
+        self.go('/')
+        result = modelstats()
+        profiles_num_1 = int(result[result.find(PROFILE):].split()[1])
+        requests_num_1 = int(result[result.find(REQUEST):].split()[1])
+        self.assertEqual(profiles_num_0 + 1, profiles_num_1)
+        self.assertEqual(requests_num_0 + 1, requests_num_1)
+
+
 

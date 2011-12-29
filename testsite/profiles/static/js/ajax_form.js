@@ -27,7 +27,7 @@ function setupAjaxForm(form_id){
     };
 
     $(form).ajaxSend(function(){
-        $(form_message).removeClass().addClass('loading').html('Uploading...').fadeIn();
+        $(form_message).html('Uploading...').fadeIn();
     });
 
     var options = {
@@ -37,8 +37,9 @@ function setupAjaxForm(form_id){
         },
         success: function(json){
 		$(form_message).hide();
+		$(form_message).html(json.result).fadeIn('slow');
 		$('.error').remove();
-		if(json.errors) {
+		if(!jQuery.isEmptyObject(json.errors)) {
 			disableAll(false);
 			$.each(json.errors,function(fieldname,errmsgs) {
 			    var id = "#id_" + fieldname;
@@ -46,9 +47,9 @@ function setupAjaxForm(form_id){
 			        $(id).after('<div class="error" id="' + fieldname + '_error">' + errmsgs[i] + '</div>');
 			    }
 			});
-		$(form_message).removeClass().addClass(json.type).html(json.message).fadeIn('slow');
+		    $(form_message).html('<div class="error">' + json.result + "</div>").fadeIn('slow');
 		} else {
-		    $(form_message).removeClass().addClass(json.type).html(json.message+". Reloading...").fadeIn('slow');
+		    $(form_message).html(json.result+". Reloading...").fadeIn('slow');
                     setTimeout('window.location.href=window.location.href', 1000);
 		}
         }

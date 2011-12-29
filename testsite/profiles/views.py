@@ -33,17 +33,12 @@ def edit(request, pk=1, errors=None):
                 contacts.save()
                 profile.save()
                 if request.is_ajax():
-                    return HttpResponse(simplejson.dumps({'message': 'Done',
-                                                          'type': 'success'}),
+                    return HttpResponse(simplejson.dumps({'result': 'Done'}),
                                         mimetype='application/javascript')
                 return redirect(index)
             if not profile.is_valid():
-                print('errors 1')
-                print(profile.errors)
                 errors.update(profile.errors)
             if not contacts.is_valid():
-                print('errors 2')
-                print(contacts.errors)
                 for num, suberrors in enumerate(contacts.errors):
                     if suberrors:
                         for field, error in suberrors.iteritems():
@@ -51,7 +46,7 @@ def edit(request, pk=1, errors=None):
                             errors.update({field_id: error})
         else:
             errors.update(
-                {'message': 'You are not authorized to edit this form'})
+                {'result': 'You are not authorized to edit this form'})
     if (request.method == 'GET' or len(errors) or
     not request.user.is_authenticated()):
         profile = ProfileForm(instance=target)
@@ -61,8 +56,7 @@ def edit(request, pk=1, errors=None):
             readonly(contacts)
 
     if request.is_ajax():
-        return HttpResponse(simplejson.dumps({'message': 'Error',
-                                              'type': 'error',
+        return HttpResponse(simplejson.dumps({'result': 'Error',
                                               'errors': errors}),
                             mimetype='application/javascript')
     else:

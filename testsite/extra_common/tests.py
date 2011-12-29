@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from testsite.extra_common.testcases import MyTestCase, RequestFactory
+from testsite.extra_common.management.commands.modelstats import modelstats
 from django.template import RequestContext
 from testsite.extra_common.context_processors import add_settings
 from django.conf import settings
@@ -17,5 +18,9 @@ class TestContext(MyTestCase):
 
 class testManagement(MyTestCase):
     def test_modelstats(self):
-        result = management.call_command('modelstats', verbosity=0,
-                                         interactive=False)
+        management.call_command('modelstats', verbosity=0,
+                                interactive=False)
+        result = modelstats()
+        self.assertIn('testsite.profiles.models.Profile', result)
+        self.assertIn('testsite.profiles.models.Logging', result)
+

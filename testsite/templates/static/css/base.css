@@ -4,3 +4,12 @@ BODY {
 .errorlist, .error{
     color: red;
 }
+
+.hideit {
+    display: none;
+    visibility: hidden;
+}
+
+tr.hideit {
+    visibility: collapse;
+}

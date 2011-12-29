@@ -37,10 +37,11 @@ function setupAjaxForm(form_id){
         },
         success: function(json){
 		$(form_message).hide();
+		$('.error').remove();
 		if(json.errors) {
 			disableAll(false);
 			$.each(json.errors,function(fieldname,errmsgs) {
-			    id = "#id_" + fieldname;
+			    var id = "#id_" + fieldname;
 			    for (var i=0; i<errmsgs.length; i++){
 			        $(id).after('<div class="error" id="' + fieldname + '_error">' + errmsgs[i] + '</div>');
 			    }
@@ -89,6 +90,16 @@ function cloneLess(selector, type, subselector) {
     total--;
     $('#id_' + type + '-TOTAL_FORMS').val(total);
     $(subselector).remove();
+};
+
+
+function cloneLessExisting(selector, formselector) {
+    var Element = $(selector);
+    console.log(Element);
+    //var total = $(selector).length;
+    console.log(Element.find('#id_' + formselector + '-DELETE'));
+    Element.find('#id_' + formselector + '-DELETE').prop("checked", true);
+    Element.addClass('hideit');
 };
 
 

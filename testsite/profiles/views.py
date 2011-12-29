@@ -38,9 +38,17 @@ def edit(request, pk=1, errors=None):
                                         mimetype='application/javascript')
                 return redirect(index)
             if not profile.is_valid():
+                print('errors 1')
+                print(profile.errors)
                 errors.update(profile.errors)
             if not contacts.is_valid():
-                errors.update(contacts.errors)
+                print('errors 2')
+                print(contacts.errors)
+                for num, suberrors in enumerate(contacts.errors):
+                    if suberrors:
+                        for field, error in suberrors.iteritems():
+                            field_id = "%s-%s-%s" % (contacts.prefix, num, field)
+                            errors.update({field_id: error})
         else:
             errors.update(
                 {'message': 'You are not authorized to edit this form'})

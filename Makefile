@@ -12,7 +12,7 @@ testall:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings_test ${TESTER} --with-coverage --cover-package=${PROJECT}  ${PROJECT}
 	rm ${PROJECT}/database_test.sqlite
 
-run: collectstatic syncdb migrate
+run: collectstatic schemamigration syncdb migrate
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings ${MANAGE} runserver
 
 syncdb:
@@ -22,7 +22,8 @@ collectstatic:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings ${MANAGE} collectstatic --noinput
 
 migrate:
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings ${MANAGE} migrate 
+
+schemamigration:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings ${MANAGE} schemamigration profiles --auto
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings ${MANAGE} migrate profiles
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings ${MANAGE} schemamigration mylogging --auto
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings ${MANAGE} migrate mylogging

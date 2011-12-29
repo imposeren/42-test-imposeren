@@ -32,17 +32,22 @@ class testManagement(MyTestCase):
         self.assertIn(REQUEST, result)
         profiles_num_0 = int(result[result.find(PROFILE):].split()[1])
         requests_num_0 = int(result[result.find(REQUEST):].split()[1])
-        new_profile = Profile(name="TestName",
-                              surname="TestSur",
-                              bio='no bio',
-                              birth=datetime.datetime(1987, 12, 11, 0, 0))
-        new_profile.save()
+        Profile(name="TestName",
+                surname="TestSur",
+                bio='no bio',
+                birth=datetime.datetime(1987, 12, 11, 0, 0)).save()
+        Profile(name="TestName2",
+                surname="TestSur",
+                bio='no bio',
+                birth=datetime.datetime(1987, 12, 11, 0, 0)).save()
+        self.go('/')
+        self.go('/')
         self.go('/')
         result = modelstats()
         profiles_num_1 = int(result[result.find(PROFILE):].split()[1])
         requests_num_1 = int(result[result.find(REQUEST):].split()[1])
-        self.assertEqual(profiles_num_0 + 1, profiles_num_1)
-        self.assertEqual(requests_num_0 + 1, requests_num_1)
+        self.assertEqual(profiles_num_0 + 2, profiles_num_1)
+        self.assertEqual(requests_num_0 + 3, requests_num_1)
 
 
 

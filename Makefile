@@ -12,7 +12,7 @@ testall:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings_test ${TESTER} --with-coverage --cover-package=${PROJECT}  ${PROJECT}
 	rm ${PROJECT}/database_test.sqlite
 
-run: collectstatic schemamigration syncdb migrate
+run: collectstatic schemamigration migrate
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=${PROJECT}.settings ${MANAGE} runserver
 
 syncdb:

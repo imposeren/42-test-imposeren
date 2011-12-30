@@ -1,10 +1,12 @@
 {% extends "base.html" %}
-
+{% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/requlist.css">
+{% endblock %}
 {% block content %}
     {% if requests %}
-        <table>
+        <table class="reqs">
         <tr>
-            <th>date</th>
+            <th width="190" >date</th>
             <th>method</th>
             <th>path</th>
             <th>get</th>

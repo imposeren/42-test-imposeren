@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if requests %}
+        <table>
+        <tr>
+            <th>date</th>
+            <th>method</th>
+            <th>path</th>
+            <th>get</th>
+            <th>post</th>
+            <th>priority</th>
+        </tr>
+        {% for item in requests.object_list %}
+            <tr>
+                <td>{{ item.date }}</td>
+                <td>{{ item.method }}</td>
+                <td>{{ item.path }}</td>
+                <td>{{ item.get }}</td>
+                <td>{{ item.post }}</td>
+                <td>{{ item.priority }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>No requests are available.</p>
+    {% endif %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if requests.has_previous %}
+            <a href="?page={{ requests.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ requests.number }} of {{ requests.paginator.num_pages }}.
+        </span>
+
+        {% if requests.has_next %}
+            <a href="?page={{ requests.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

@@ -17,3 +17,29 @@ BODY {
 tr.hideit {
     visibility: collapse;
 }
+
+
+table {
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: solid;
+	border-color: gray;
+	border-collapse: separate;
+	background-color: white;
+}
+table th {
+	border-width: 1px;
+	padding: 1px;
+	border-style: solid;
+	border-color: gray;
+	background-color: white;
+	-moz-border-radius: ;
+}
+table td {
+	border-width: 1px;
+	padding: 1px;
+	border-style: solid;
+	border-color: gray;
+	background-color: white;
+	-moz-border-radius: ;
+}

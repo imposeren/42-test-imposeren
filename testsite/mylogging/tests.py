@@ -62,9 +62,9 @@ class testDBLogging(MyTestCase):
 
 class TestPrioritizedLogs(MyHttpTestCase):
     def test_counts(self):
-        prioritized_url = self.build_url('mylogging:list',
+        prioritized_url = self.build_url('mylogging:listed',
                                          kwargs={'sortby': 'priority'})
-        prioritized_url_r = self.build_url('mylogging:list',
+        prioritized_url_r = self.build_url('mylogging:listed',
                                            kwargs={'sortby': '-priority'})
 #        dated_url = self.build_url('mylogging:list',
 #                                   kwargs={'sortby': 'date'})

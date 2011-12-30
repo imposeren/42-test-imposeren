@@ -64,8 +64,25 @@ class TestPrioritizedLogs(MyHttpTestCase):
     def test_counts(self):
         prioritized_url = self.build_url('mylogging:list',
                                          kwargs={'sortby': 'priority'})
-        dated_url = self.build_url('mylogging:list',
-                                   kwargs={'sortby': 'priority'})
-        self.go(prioritized_url)
-        self.go(dated_url)
+        prioritized_url_r = self.build_url('mylogging:list',
+                                           kwargs={'sortby': '-priority'})
+#        dated_url = self.build_url('mylogging:list',
+#                                   kwargs={'sortby': 'date'})
+        self.go('/')
+        self.go('/')
+        last_req = Request.objects.latest()
+        last_req.proority = 0
+        last_req.save()
 
+        self.go(prioritized_url)
+        self.find('/.*(\n)1.*(\n)'
+                  '/.*(\n)0')
+
+        self.go('/')
+        self.go('/')
+        last_req = Request.objects.latest()
+        last_req.proority = 0
+        last_req.save()
+        self.go(prioritized_url_r)
+        self.find('/.*(\n)0.*(\n)'
+                  '/.*(\n)1')

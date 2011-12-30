@@ -50,5 +50,6 @@ def listed(request, sortby='date'):
             requests = paginator.page(1)
         except (EmptyPage, InvalidPage):
             requests = paginator.page(paginator.num_pages)
-        return render_to_response(template, {'requests': requests},
+        return render_to_response(template, {'requests': requests,
+                                             'sortby': sortby[0]},
                                   context_instance=RequestContext(request))

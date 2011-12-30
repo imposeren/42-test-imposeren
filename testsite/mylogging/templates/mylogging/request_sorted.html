@@ -7,14 +7,25 @@
 {% endblock %}
 {% block content %}
     {% if requests %}
+        Sorting by {{ sortby }}
         <table class="reqs">
         <tr>
-            <th width="190" >date</th>
+            <th width="190" >
+                {% if sortby == "-date" %}
+                <a href="{% url 'mylogging:listed' sortby='date' %}">-date</a></th>
+                {% else %}
+                <a href="{% url 'mylogging:listed' sortby='-date' %}">date</a></th>
+                {% endif %}
             <th width="65">method</th>
-            <th>path</th>
-            <th>get</th>
-            <th width="40%">post</th>
-            <th width="70"><a href="{% url 'mylogging:edit' %}">priority</a></th>
+            <th width="200">path</th>
+            <th width="200">get</th>
+            <th>post</th>
+            <th width="70">
+                {% if sortby == "-priority" %}
+                <a href="{% url 'mylogging:listed' sortby='priority' %}">-priority</a></th>
+                {% else %}
+                <a href="{% url 'mylogging:listed' sortby='-priority' %}">priority</a></th>
+                {% endif %}
         </tr>
         {% for item in requests.object_list %}
             <tr>

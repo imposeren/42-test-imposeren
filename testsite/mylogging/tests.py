@@ -33,7 +33,7 @@ class testDBLogging(MyTestCase):
         prof.save()
         latest = Modellog.objects.latest()
         self.assertEqual(logs_count + 1, Modellog.objects.count())
-        self.assertEqual(latest.action, 'create')
+        self.assertEqual(latest.action, 'C')
         self.assertEqual(latest.inst_pk, prof.pk)
         self.assertEqual(latest.app, prof._meta.app_label)
         self.assertEqual(latest.model, prof._meta.object_name)
@@ -42,11 +42,11 @@ class testDBLogging(MyTestCase):
         prof.name = "NewName"
         prof.save()
         self.assertEqual(logs_count + 2, Modellog.objects.count())
-        self.assertEqual(Modellog.objects.latest().action, 'edit')
+        self.assertEqual(Modellog.objects.latest().action, 'E')
 
         #test deletion log
         prof.delete()
-        self.assertEqual(Modellog.objects.latest().action, 'delete')
+        self.assertEqual(Modellog.objects.latest().action, 'D')
         self.assertEqual(logs_count + 3, Modellog.objects.count())
 
         #test another creation log

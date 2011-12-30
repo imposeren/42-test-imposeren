@@ -1,5 +1,7 @@
 """Models go here"""
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 
 class Request(models.Model):
@@ -27,6 +29,37 @@ class Modellog(models.Model):
     model = models.CharField(max_length=32, choices=ACTION_CHOICES)
     date = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        get_latest_by = "date"
+
     def __unicode__(self):
         return "%s: %s %s.%s, pk=%s " % (self.date, self.action, self.app,
                                          self.model, self.inst_pk)
+
+
+# Signals
+# I don't like putting it in separate file and importing here because this will
+# require recursive import (from testsite.mylogging import Modellog)
+def log_any(sender, instance, action):
+    app = instance._meta.app_label
+    if sender != Modellog and app != 'sessions':  # don't need to log sessions?
+        newentry = Modellog()
+        newentry.inst_pk = instance.pk
+        newentry.app = app
+        newentry.model = instance._meta.object_name
+        newentry.action = action
+        newentry.save()
+
+
+@receiver(post_save)
+def log_edit_create(sender, instance, created, raw, **kwargs):
+    if created:
+        action = 'C'
+    else:
+        action = 'E'
+    log_any(sender, instance, action)
+
+
+@receiver(post_delete)
+def log_delete(sender, instance, **kwargs):
+    log_any(sender, instance, 'D')

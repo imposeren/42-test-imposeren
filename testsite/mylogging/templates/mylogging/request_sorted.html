@@ -1,17 +1,20 @@
 {% extends "base.html" %}
+{% load url from future %}
 {% block extra_head %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/requlist.css">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/priority.js"></script>
 {% endblock %}
 {% block content %}
     {% if requests %}
         <table class="reqs">
         <tr>
             <th width="190" >date</th>
-            <th>method</th>
+            <th width="65">method</th>
             <th>path</th>
             <th>get</th>
-            <th>post</th>
-            <th>priority</th>
+            <th width="40%">post</th>
+            <th width="70"><a href="{% url 'mylogging:edit' %}">priority</a></th>
         </tr>
         {% for item in requests.object_list %}
             <tr>
@@ -20,7 +23,7 @@
                 <td>{{ item.path }}</td>
                 <td>{{ item.get }}</td>
                 <td>{{ item.post }}</td>
-                <td>{{ item.priority }}</td>
+                <td><a id="priority-{{ item.pk }}" href="javascript:change_priority('{{ item.pk }}')" >{{ item.priority }}</a></td>
             </tr>
         {% endfor %}
         </table>

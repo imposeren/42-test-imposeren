@@ -95,3 +95,15 @@ class TestForms(MyHttpTestCase):
 #        self.formvalue(1, "name", "Value2")
 #        self.submit200()  # back on edit page
 #        self.find('not authorized')
+
+
+class TestReversedForm(MyHttpTestCase):
+    def test(self):
+        edit_url = self.build_url('profiles:edit')
+        self.login('admin', 'admin')
+        self.go200(edit_url)
+        self.find('Reverse')
+        self.go200(self.build_url('profiles:edit-reversed'))
+        self.find('Photo(\n|.)*Date of Birth(\n|.)*Last Name(\n|.)*Name')
+        self.find('Bio(\n|.)*Contacts(\n|.)*phone(\n|.)*email')
+        self.find('Bio(\n|.)*Photo(\n|.)*Name')

@@ -58,3 +58,14 @@ class testDBLogging(MyTestCase):
         self.assertEqual(latest.inst_pk, req.pk)
         self.assertEqual(latest.app, req._meta.app_label)
         self.assertEqual(latest.model, req._meta.object_name)
+
+
+class TestPrioritizedLogs(MyHttpTestCase):
+    def test_counts(self):
+        prioritized_url = self.build_url('mylogging:list',
+                                         kwargs={'sortby': 'priority'})
+        dated_url = self.build_url('mylogging:list',
+                                   kwargs={'sortby': 'priority'})
+        self.go(prioritized_url)
+        self.go(dated_url)
+

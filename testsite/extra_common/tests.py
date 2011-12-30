@@ -8,6 +8,7 @@ from django.core import management
 from testsite.profiles.models import Profile
 import datetime
 from django.template import Template
+from django.contrib.auth.models import User
 
 
 class TestContext(MyTestCase):
@@ -58,7 +59,6 @@ class testTag(MyTestCase):
 #        register.tag('edit_link ', edit_link)
 
     def test_tag(self):
-        from django.contrib.auth.models import User
         factory = RequestFactory()
         factory.login(username='admin', password='admin')
         request = factory.get('/')

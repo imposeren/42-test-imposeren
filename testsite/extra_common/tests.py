@@ -6,8 +6,8 @@ from testsite.extra_common.context_processors import add_settings
 from django.conf import settings
 from django.core import management
 from testsite.profiles.models import Profile
-from testsite.mylogging.models import Request
 import datetime
+from django.template import Template
 
 
 class TestContext(MyTestCase):
@@ -18,6 +18,7 @@ class TestContext(MyTestCase):
         context = RequestContext(request, {'foo': 'bar'}, [add_settings])
         self.assertIn('settings', context)
         self.assertEqual(context['settings'], settings)
+
 
 class testManagement(MyTestCase):
     def test_modelstats(self):
@@ -50,4 +51,21 @@ class testManagement(MyTestCase):
         self.assertEqual(requests_num_0 + 3, requests_num_1)
 
 
+class testTag(MyTestCase):
+#    def setUp(self):
+#        register = template.Library()
+#        template.libraries['django.templatetags.mylogging_tags'] = register
+#        register.tag('edit_link ', edit_link)
 
+    def test_tag(self):
+        from django.contrib.auth.models import User
+        factory = RequestFactory()
+        factory.login(username='admin', password='admin')
+        request = factory.get('/')
+        request.user = User.objects.get(username='admin')
+        context = RequestContext(request)
+        out = Template(
+            "{% load mylogging_tags %}"
+            "{% edit_link user %}"
+        ).render(context)
+        self.assertEquals(out, "/admin/auth/user/1/")

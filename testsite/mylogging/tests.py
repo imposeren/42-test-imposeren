@@ -3,6 +3,7 @@ from testsite.mylogging.models import Request, Modellog
 from testsite.profiles.models import Profile
 from testsite.extra_common.testcases import MyHttpTestCase, MyTestCase
 import datetime
+from django.contrib.contenttypes.models import ContentType
 
 
 class TestLogger(MyHttpTestCase):
@@ -32,11 +33,12 @@ class testDBLogging(MyTestCase):
                        )
         prof.save()
         latest = Modellog.objects.latest()
+        prof_type = ContentType.objects.get_for_model(prof)
         self.assertEqual(logs_count + 1, Modellog.objects.count())
         self.assertEqual(latest.action, 'C')
         self.assertEqual(latest.inst_pk, prof.pk)
-        self.assertEqual(latest.app, prof._meta.app_label)
-        self.assertEqual(latest.model, prof._meta.object_name)
+        self.assertEqual(latest.app, prof_type.app_label)
+        self.assertEqual(latest.model, prof_type.model)
 
         #test modification log
         prof.name = "NewName"
@@ -55,10 +57,10 @@ class testDBLogging(MyTestCase):
         req.save()
         self.assertEqual(logs_count + 5, Modellog.objects.count())
         latest = Modellog.objects.latest()
+        req_type = ContentType.objects.get_for_model(req)
         self.assertEqual(latest.inst_pk, req.pk)
-        self.assertEqual(latest.app, req._meta.app_label)
-        self.assertEqual(latest.model, req._meta.object_name)
-
+        self.assertEqual(latest.app, req_type.app_label)
+        self.assertEqual(latest.model, req_type.model)
 
 class TestPrioritizedLogs(MyHttpTestCase):
     def test_counts(self):
@@ -71,18 +73,18 @@ class TestPrioritizedLogs(MyHttpTestCase):
         self.go('/')
         self.go('/')
         last_req = Request.objects.latest()
-        last_req.proority = 0
+        last_req.priority = 0
         last_req.save()
 
         self.go(prioritized_url)
-        self.find('/.*(\n)1.*(\n)'
-                  '/.*(\n)0')
+        self.find(r'/(\n|.)*1(\n|.)*<tr>(\n|.)*'
+                  r'/(\n|.)*0')
 
         self.go('/')
         self.go('/')
         last_req = Request.objects.latest()
-        last_req.proority = 0
+        last_req.priority = 0
         last_req.save()
         self.go(prioritized_url_r)
-        self.find('/.*(\n)0.*(\n)'
-                  '/.*(\n)1')
+        self.find(r'/(\n|.)*0(\n|.)*<tr>(\n|.)*'
+                  r'/(\n|.)*1')

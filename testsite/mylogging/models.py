@@ -2,6 +2,7 @@
 from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.contrib.contenttypes.models import ContentType
 
 
 class Request(models.Model):
@@ -45,12 +46,13 @@ class Modellog(models.Model):
 # I don't like putting it in separate file and importing here because this will
 # require recursive import (from testsite.mylogging import Modellog)
 def log_any(sender, instance, action):
-    app = instance._meta.app_label
+    instance_type = ContentType.objects.get_for_model(instance)
+    app = instance_type.app_label
     if sender != Modellog and app != 'sessions':  # don't need to log sessions?
         newentry = Modellog()
         newentry.inst_pk = instance.pk
         newentry.app = app
-        newentry.model = instance._meta.object_name
+        newentry.model = instance_type.model
         newentry.action = action
         newentry.save()
 

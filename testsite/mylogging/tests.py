@@ -38,7 +38,7 @@ class testDBLogging(MyTestCase):
         self.assertEqual(latest.action, 'C')
         self.assertEqual(latest.inst_pk, prof.pk)
         self.assertEqual(latest.app, prof_type.app_label)
-        self.assertEqual(latest.model, prof_type.model)
+        self.assertEqual(latest.model_object, prof_type)
 
         #test modification log
         prof.name = "NewName"
@@ -60,7 +60,8 @@ class testDBLogging(MyTestCase):
         req_type = ContentType.objects.get_for_model(req)
         self.assertEqual(latest.inst_pk, req.pk)
         self.assertEqual(latest.app, req_type.app_label)
-        self.assertEqual(latest.model, req_type.model)
+        self.assertEqual(latest.model_object, req_type)
+
 
 class TestPrioritizedLogs(MyHttpTestCase):
     def test_counts(self):

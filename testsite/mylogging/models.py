@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 
 class Request(models.Model):
@@ -31,8 +32,11 @@ class Modellog(models.Model):
     action = models.CharField(max_length=1, choices=ACTION_CHOICES)
     inst_pk = models.IntegerField()
     app = models.CharField(max_length=32, choices=ACTION_CHOICES)
-    model = models.CharField(max_length=32, choices=ACTION_CHOICES)
     date = models.DateTimeField(auto_now_add=True)
+
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    model_object = generic.GenericForeignKey('content_type', 'object_id')
 
     class Meta:
         get_latest_by = "date"
@@ -52,7 +56,7 @@ def log_any(sender, instance, action):
         newentry = Modellog()
         newentry.inst_pk = instance.pk
         newentry.app = app
-        newentry.model = instance_type.model
+        newentry.model_object = instance_type
         newentry.action = action
         newentry.save()
 

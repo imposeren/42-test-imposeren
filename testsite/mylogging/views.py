@@ -19,20 +19,24 @@ def index(request):
 
 def listed(request, sortby='date'):
     template = 'mylogging/request_sorted.html'
-    if (request.method == 'POST' and request.user.is_authenticated()
-    and request.is_ajax()):
-        request_id = int(request.POST['request_id'])
-        new_value = int(request.POST['value'])
-        try:
-            req = Request.objects.get(pk=request_id)
-            req.priority = new_value
-            req.save()
-        except Exception:
-            return HttpResponse(simplejson.dumps({'result': 'error'}),
+    if (request.method == 'POST' and request.is_ajax()):
+        if request.user.is_authenticated():
+            request_id = int(request.POST['request_id'])
+            new_value = int(request.POST['value'])
+            try:
+                req = Request.objects.get(pk=request_id)
+                req.priority = new_value
+                req.save()
+            except Exception:
+                return HttpResponse(simplejson.dumps({'result': 'error'}),
+                                    mimetype='application/javascript')
+            return HttpResponse(simplejson.dumps({'result': 'success',
+                                                  'value': req.priority}),
                                 mimetype='application/javascript')
-        return HttpResponse(simplejson.dumps({'result': 'success',
-                                              'value': req.priority}),
-                            mimetype='application/javascript')
+        else:
+            return HttpResponse(simplejson.dumps({'result': 'denied'}),
+                                mimetype='application/javascript')
+
     else:
         if sortby.endswith('date'):
             sortby = [sortby, 'priority']

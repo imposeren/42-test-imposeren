@@ -12,6 +12,8 @@ function change_priority(id){
                console.log(result);
                if (result.result == "success"){
                    $("#priority-" + id).html(result.value)
+               } else {
+                   alert("Permission denied")
                };
            },
            "json");

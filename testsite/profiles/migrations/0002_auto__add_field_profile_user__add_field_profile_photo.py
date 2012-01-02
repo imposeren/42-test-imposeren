@@ -7,21 +7,25 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Profile.user'
         db.add_column('profiles_profile', 'user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], unique=True, null=True, blank=True), keep_default=False)
 
         # Adding field 'Profile.photo'
         db.add_column('profiles_profile', 'photo', self.gf('django.db.models.fields.files.ImageField')(default='', max_length=100, blank=True), keep_default=False)
 
+        db.add_column('profiles_profile', 'birth', self.gf('django.db.models.fields.DateField')(default=datetime.date(1987, 12, 11)), keep_default=False)
+
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Profile.user'
         db.delete_column('profiles_profile', 'user_id')
 
         # Deleting field 'Profile.photo'
         db.delete_column('profiles_profile', 'photo')
+
+        db.delete_column('profiles_profile', 'birth')
 
 
     models = {

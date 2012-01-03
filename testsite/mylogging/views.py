@@ -22,13 +22,15 @@ def listed(request, sortby='date'):
     if (request.method == 'POST' and request.is_ajax()):
         if request.user.is_authenticated():
             request_id = int(request.POST['request_id'])
-            new_value = int(request.POST['value'])
             try:
+                new_value = int(request.POST['value'])
                 req = Request.objects.get(pk=request_id)
                 req.priority = new_value
                 req.save()
-            except Exception:
-                return HttpResponse(simplejson.dumps({'result': 'error'}),
+            except ValueError:
+                value = Request.objects.get(pk=request_id).priority
+                return HttpResponse(simplejson.dumps({'result': 'error',
+                                                      'value': value}),
                                     mimetype='application/javascript')
             return HttpResponse(simplejson.dumps({'result': 'success',
                                                   'value': req.priority}),

@@ -1,19 +1,15 @@
 
 function change_priority(id){
-    old_value = $("#priority-" + id).text();
-    if (old_value == "1") {
-        new_value = 0;
-    } else {
-        new_value = 1;
-    };
+    new_value = $("#priority-" + id).val();
+    $("#priority-" + id).removeClass().addClass("uploading");
     $.post("./",
            {request_id: id, value: new_value},
            function(result){
-               console.log(result);
+               $("#priority-" + id).val(result.value);
                if (result.result == "success"){
-                   $("#priority-" + id).html(result.value)
+                    $("#priority-" + id).removeClass().addClass("done");
                } else {
-                   alert("Permission denied")
+                    $("#priority-" + id).removeClass().addClass("error");
                };
            },
            "json");

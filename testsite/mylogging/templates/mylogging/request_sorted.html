@@ -34,7 +34,7 @@
                 <td>{{ item.path }}</td>
                 <td>{{ item.get }}</td>
                 <td>{{ item.post }}</td>
-                <td><a id="priority-{{ item.pk }}" href="javascript:change_priority('{{ item.pk }}')" >{{ item.priority }}</a></td>
+                <td><form ><input type='text' onChange="change_priority('{{ item.pk }}');" id="priority-{{ item.pk }}" value="{{ item.priority }}"></td>
             </tr>
         {% endfor %}
         </table>

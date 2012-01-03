@@ -22,3 +22,16 @@ table.reqs td {
 	background-color: white;
 	-moz-border-radius: ;
 }
+
+
+INPUT.uploading {
+    background-color: yellow;
+}
+
+INPUT.error {
+    background-color: red;
+    color: black;
+}
+
+INPUT.done {
+    background-color: GreenYellow ;}

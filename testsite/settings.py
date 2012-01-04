@@ -149,7 +149,8 @@ INSTALLED_APPS = (
     'south',
 )
 
-if ITS_TESTING:
+if ITS_TESTING or (not os.path.exists(DATABASES['default']['NAME'])
+                   and not ITS_TESTING):
     INSTALLED_APPS = list(INSTALLED_APPS)
     INSTALLED_APPS.remove('south')
     INSTALLED_APPS = tuple(INSTALLED_APPS)

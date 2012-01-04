@@ -22,6 +22,7 @@ syncdb: $(PROJECT)/database.sqlite
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) loaddata auth.json
 
 $(PROJECT)/database.sqlite:
+	-find . -name '*.pyc' | xargs rm
 	-rm $(PROJECT)/settings.pyc
 	sed -i  -e "s/'south'/#'south'/" $(PROJECT)/settings.py
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) syncdb --noinput

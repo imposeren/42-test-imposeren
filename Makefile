@@ -22,8 +22,10 @@ syncdb: $(PROJECT)/database.sqlite
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) loaddata auth.json
 
 $(PROJECT)/database.sqlite:
+	-rm $(PROJECT)/settings.pyc
 	sed -i  -e "s/'south'/#'south'/" $(PROJECT)/settings.py
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) syncdb --noinput
+	-rm $(PROJECT)/settings.pyc
 	sed -i -e "s/\#'south'/'south'/" $(PROJECT)/settings.py
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) syncdb --noinput
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) migrate profiles 0001 --fake

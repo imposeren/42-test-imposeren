@@ -69,11 +69,9 @@
     </tr>
     </table>
     <div id="message">
-    {% if errors_html %}
+    {% if contacts and errors %}
         Errors in form:
-        {% for error in errors_html %}
-            {{ error }}
-        {% endfor %}
+        {{ errors }}
     {% endif %}
     </div>
     {% if user.is_authenticated %}

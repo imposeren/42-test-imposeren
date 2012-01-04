@@ -61,6 +61,7 @@ def edit(request, pk=1, errors=None, reverse=False):
                                               'errors': errors}),
                             mimetype='application/javascript')
     else:
+        print(errors)
         return render_to_response(template, {'profile': profile,
                                              'contacts': contacts,
                                              'errors': errors},

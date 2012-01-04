@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from testsite.extra_common.testcases import MyTestCase, RequestFactory
+from testsite.extra_common.testcases import MyTestCase
 from testsite.extra_common.management.commands.modelstats import modelstats
 from django.template import RequestContext
 from testsite.extra_common.context_processors import add_settings
@@ -9,6 +9,7 @@ from testsite.profiles.models import Profile
 import datetime
 from django.template import Template
 from django.contrib.auth.models import User
+from django.test import RequestFactory
 
 
 class TestContext(MyTestCase):
@@ -53,14 +54,9 @@ class testManagement(MyTestCase):
 
 
 class testTag(MyTestCase):
-#    def setUp(self):
-#        register = template.Library()
-#        template.libraries['django.templatetags.mylogging_tags'] = register
-#        register.tag('edit_link ', edit_link)
 
     def test_tag(self):
         factory = RequestFactory()
-        factory.login(username='admin', password='admin')
         request = factory.get('/')
         request.user = User.objects.get(username='admin')
         context = RequestContext(request)

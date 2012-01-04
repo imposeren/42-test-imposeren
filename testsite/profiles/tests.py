@@ -92,20 +92,18 @@ class TestForms(MyHttpTestCase):
         self.submit200()
         self.find("Enter a valid phone number")
 
-## twill does not support javascript?
-#        #test wrong form
-#        self.go200(edit_url)
-#        self.formvalue(1, "birth", "ababab")
-#        self.submit200()  # back on edit page
-#        self.find('Errors')
-#        self.find('Enter a valid date')
+        #test wrong form
+        self.go200(edit_url)
+        self.formvalue(1, "birth", "ababab")
+        self.submit200()  # back on edit page
+        self.find('Enter a valid date')
 
-#        #test unauthorized edit
-#        self.logout()
-#        self.go(edit_url)
-#        self.formvalue(1, "name", "Value2")
-#        self.submit200()  # back on edit page
-#        self.find('not authorized')
+        #test unauthorized edit
+        self.logout()
+        self.go(edit_url)
+        with self.assertRaises(AttributeError):
+        # twill raises attribute error when form is disabled
+            self.formvalue(1, "name", "Value2")
 
 
 class TestReversedForm(MyHttpTestCase):

@@ -41,6 +41,14 @@ class ContactForm(forms.ModelForm):
             'data': forms.TextInput(attrs={'size': '21'}),
         }
 
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        mean = cleaned_data.get("mean")
+        data = cleaned_data.get("data")
+        if mean in ['email', 'e-mail']:
+            pass
+
+
 
 ContactFormSet = inlineformset_factory(Profile, Contact,
                                        form=ContactForm)

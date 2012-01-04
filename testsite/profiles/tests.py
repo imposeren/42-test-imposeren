@@ -73,7 +73,6 @@ class TestForms(MyHttpTestCase):
 
         #self.submit200(11, url=view_url)
         self.submit200()
-        self.sleep(2)
         self.go200(view_url)
         self.find(r"Name.*: Value")
         self.find(r"Last name.*: Value")

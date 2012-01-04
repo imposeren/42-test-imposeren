@@ -2,6 +2,13 @@
 #SITE ROOT
 import os
 import django
+import sys
+if ("test" in sys.argv
+   or filter(lambda x: x.find('nosetests') != -1, sys.argv)):
+    ITS_TESTING = True
+else:
+    ITS_TESTING = False
+
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
@@ -62,6 +69,7 @@ MEDIA_URL = '/media/'
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
+print(STATIC_ROOT)
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -140,6 +148,11 @@ INSTALLED_APPS = (
     'testsite.extra_common',
     'south',
 )
+
+if ITS_TESTING:
+    INSTALLED_APPS = list(INSTALLED_APPS)
+    INSTALLED_APPS.remove('south')
+    INSTALLED_APPS = tuple(INSTALLED_APPS)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

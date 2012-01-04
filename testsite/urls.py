@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
-from staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import DetailView
 from profiles.models import Profile
 from django.conf import settings

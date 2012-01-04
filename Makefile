@@ -2,16 +2,11 @@ MANAGE=django-admin.py
 TESTER=django-nosetests.py
 PROJECT=testsite
 
-pretest:
-	-rm $(PROJECT)/database_test.sqlite
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings_test $(MANAGE) syncdb --noinput
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings_test $(MANAGE) collectstatic --noinput
+test: 
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(TESTER) --with-coverage --cover-package=$(PROJECT) -e '._wm.*' $(PROJECT)
 
-test: pretest 
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings_test $(TESTER) --with-coverage --cover-package=$(PROJECT) -e '._wm.*' $(PROJECT)
-
-testall: pretest
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings_test $(TESTER) --with-coverage --cover-package=$(PROJECT)  $(PROJECT)
+testall:
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(TESTER) --with-coverage --cover-package=$(PROJECT)  $(PROJECT)
 
 run: syncdb $(PROJECT)/media $(PROJECT)/static
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) collectstatic --noinput

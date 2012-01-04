@@ -24,11 +24,11 @@ dist
 .env
 *.sqlite
 django-nosetests.py
-testsite/static/
+testsite/static/*
 .spyderworkspace
 .*.swp
 .coverage
 .ign*py
-testsite/media
+testsite/media/*
 temp/
 *.dat

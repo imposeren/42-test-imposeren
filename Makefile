@@ -25,10 +25,7 @@ $(PROJECT)/static:
 $(PROJECT)/database.sqlite:
 	-find . -name '*.pyc' | xargs rm
 	-rm $(PROJECT)/settings.pyc
-	sed -i  -e "s/'south'/#'south'/" $(PROJECT)/settings.py
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) syncdb --noinput
-	-rm $(PROJECT)/settings.pyc
-	sed -i -e "s/\#'south'/'south'/" $(PROJECT)/settings.py
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) syncdb --noinput
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) migrate profiles 0001 --fake
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(PROJECT).settings $(MANAGE) migrate mylogging 0003 --fake
